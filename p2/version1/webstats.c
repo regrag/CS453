@@ -39,6 +39,7 @@
 
 #define MAX_LINE_SIZE 4096
 #define MAX_NUM_FIELDS 40
+#define MAX_THREADS 32
 
 
 struct stats {
@@ -50,9 +51,11 @@ struct stats {
 	double local_failed_gets;
 	char **url;
 	int *requests;
+	pthread_mutex_t mutex;
 } webstats;
 
 char *program_name;
+pthread_t *tids;
 
 /*
  * parse_line(): Parse one line into string tokens separated by the given delimiters.
@@ -127,6 +130,7 @@ static void initialize_webstats()
 	webstats.local_gets = 0;
 	webstats.failed_gets = 0;
 	webstats.local_failed_gets = 0;
+	pthread_mutex_init(&(webstats->mutex), NULL);
 }
 
 
@@ -196,6 +200,7 @@ static void print_webstats()
  */
 void process_file(void *ptr)
 {
+	char *args;
 	char *filename = (char *) ptr;
 	char *linebuffer = (char *) malloc(sizeof(char) * MAX_LINE_SIZE);
 	char **field = (char **) malloc(sizeof(char *) * MAX_NUM_FIELDS);
@@ -218,11 +223,8 @@ void process_file(void *ptr)
 
 		while (fgets(linebuffer, MAX_LINE_SIZE, fin) != NULL)
 		{
-			int num = parse_line(linebuffer, " []\"", field);
-			strcpy(end_date, field[3]);
-			update_webstats(num, field);
-			free_tokens(num, field);
-			strcpy(linebuffer,"");
+
+			pthread_create(&tids[i], NULL, process_file, (void *) NULL);
 		}
 		printf("Ending date: %s\n", end_date);
 		free(end_date);
@@ -232,7 +234,18 @@ void process_file(void *ptr)
 	}
 }
 
+void process_line() {
+	pthread_mutex_lock(&(webstats->mutex));
 
+	int num = parse_line(linebuffer, " []\"", field);
+	strcpy(end_date, field[3]);
+	update_webstats(num, field);
+	free_tokens(num, field);
+	strcpy(linebuffer,"");
+
+	pthread_mutex_unlock(&(webstats->mutex));
+	return;
+}
 
 
 int main(int argc, char **argv)
@@ -248,6 +261,7 @@ int main(int argc, char **argv)
 	strcpy(program_name, argv[0]);
 
 	initialize_webstats();
+	tids = (pthread_t *) malloc(sizeof(pthread_t)*(atoi(MAX_THREADS))));
 
 	for (i=1; i<argc; i++)
 	{
