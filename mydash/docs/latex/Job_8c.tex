@@ -1,0 +1,77 @@
+\hypertarget{Job_8c}{\section{Job.\-c File Reference}
+\label{Job_8c}\index{Job.\-c@{Job.\-c}}
+}
+{\ttfamily \#include \char`\"{}Job.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}ourhdr.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{Job_8h_a9b45aca8d14f792be2c663f224868a0f}{Job\-Ptr} \hyperlink{Job_8c_aad27329049e7065bac8a46c86912d287}{create\-Job} (pid\-\_\-t key, char $\ast$command, int job\-Number)
+\item 
+unsigned long int \hyperlink{Job_8c_a3ce4dde2b60b389a73d45a8efff7f1fb}{get\-Job\-Pid} (void $\ast$\hyperlink{structjob}{job})
+\item 
+char $\ast$ \hyperlink{Job_8c_a2fe34930bad001af9b4e2428ab5ef62a}{get\-Command} (void $\ast$\hyperlink{structjob}{job})
+\item 
+unsigned int \hyperlink{Job_8c_a1ed2885b6c42d088a11171c531fcfdd6}{get\-Status} (void $\ast$\hyperlink{structjob}{job})
+\item 
+char $\ast$ \hyperlink{Job_8c_a921df24cdb2a698f5f01aef87b3ec571}{to\-String} (void $\ast$\hyperlink{structjob}{job})
+\item 
+void \hyperlink{Job_8c_ad76e08333f00b91d38f3f4f50541eaa8}{free\-Job} (void $\ast$\hyperlink{structjob}{job})
+\item 
+int \hyperlink{Job_8c_a3b35111f8bc508e46fce824c2f6a4ce2}{compare\-Jobs} (void $\ast$a, void $\ast$b)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{Job_8c_a3b35111f8bc508e46fce824c2f6a4ce2}{\index{Job.\-c@{Job.\-c}!compare\-Jobs@{compare\-Jobs}}
+\index{compare\-Jobs@{compare\-Jobs}!Job.c@{Job.\-c}}
+\subsubsection[{compare\-Jobs}]{\setlength{\rightskip}{0pt plus 5cm}int compare\-Jobs (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{a, }
+\item[{void $\ast$}]{b}
+\end{DoxyParamCaption}
+)}}\label{Job_8c_a3b35111f8bc508e46fce824c2f6a4ce2}
+\hypertarget{Job_8c_aad27329049e7065bac8a46c86912d287}{\index{Job.\-c@{Job.\-c}!create\-Job@{create\-Job}}
+\index{create\-Job@{create\-Job}!Job.c@{Job.\-c}}
+\subsubsection[{create\-Job}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Job\-Ptr} create\-Job (
+\begin{DoxyParamCaption}
+\item[{pid\-\_\-t}]{key, }
+\item[{char $\ast$}]{command, }
+\item[{int}]{job\-Number}
+\end{DoxyParamCaption}
+)}}\label{Job_8c_aad27329049e7065bac8a46c86912d287}
+\hypertarget{Job_8c_ad76e08333f00b91d38f3f4f50541eaa8}{\index{Job.\-c@{Job.\-c}!free\-Job@{free\-Job}}
+\index{free\-Job@{free\-Job}!Job.c@{Job.\-c}}
+\subsubsection[{free\-Job}]{\setlength{\rightskip}{0pt plus 5cm}void free\-Job (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{job}
+\end{DoxyParamCaption}
+)}}\label{Job_8c_ad76e08333f00b91d38f3f4f50541eaa8}
+\hypertarget{Job_8c_a2fe34930bad001af9b4e2428ab5ef62a}{\index{Job.\-c@{Job.\-c}!get\-Command@{get\-Command}}
+\index{get\-Command@{get\-Command}!Job.c@{Job.\-c}}
+\subsubsection[{get\-Command}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ get\-Command (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{job}
+\end{DoxyParamCaption}
+)}}\label{Job_8c_a2fe34930bad001af9b4e2428ab5ef62a}
+\hypertarget{Job_8c_a3ce4dde2b60b389a73d45a8efff7f1fb}{\index{Job.\-c@{Job.\-c}!get\-Job\-Pid@{get\-Job\-Pid}}
+\index{get\-Job\-Pid@{get\-Job\-Pid}!Job.c@{Job.\-c}}
+\subsubsection[{get\-Job\-Pid}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long int get\-Job\-Pid (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{job}
+\end{DoxyParamCaption}
+)}}\label{Job_8c_a3ce4dde2b60b389a73d45a8efff7f1fb}
+\hypertarget{Job_8c_a1ed2885b6c42d088a11171c531fcfdd6}{\index{Job.\-c@{Job.\-c}!get\-Status@{get\-Status}}
+\index{get\-Status@{get\-Status}!Job.c@{Job.\-c}}
+\subsubsection[{get\-Status}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int get\-Status (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{job}
+\end{DoxyParamCaption}
+)}}\label{Job_8c_a1ed2885b6c42d088a11171c531fcfdd6}
+\hypertarget{Job_8c_a921df24cdb2a698f5f01aef87b3ec571}{\index{Job.\-c@{Job.\-c}!to\-String@{to\-String}}
+\index{to\-String@{to\-String}!Job.c@{Job.\-c}}
+\subsubsection[{to\-String}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ to\-String (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{job}
+\end{DoxyParamCaption}
+)}}\label{Job_8c_a921df24cdb2a698f5f01aef87b3ec571}

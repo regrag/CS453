@@ -1,0 +1,149 @@
+\hypertarget{List_8h}{\section{List.\-h File Reference}
+\label{List_8h}\index{List.\-h@{List.\-h}}
+}
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}common.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Node.\-h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structlist}{list}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structlist}{list} \hyperlink{List_8h_aa89b8bc105d9a09d4e7c06e8b34078a7}{List}
+\item 
+typedef struct \hyperlink{structlist}{list} $\ast$ \hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} \hyperlink{List_8h_a3858b264a79732d7b9be486f2f2e63b0}{create\-List} (unsigned long int($\ast$get\-Key)(void $\ast$), char $\ast$($\ast$\hyperlink{Job_8h_a35f2c02ea31a2d3e044a11ba7aa3c4b6}{to\-String})(void $\ast$), void($\ast$free\-Object)(void $\ast$), int($\ast$compare\-Function)(void $\ast$, void $\ast$))
+\item 
+void \hyperlink{List_8h_ae84ae05d522c39df123f60bca2b27dea}{free\-List} (\hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} L)
+\item 
+int \hyperlink{List_8h_ab3d2a46b4fedd016c3a03c297b89d8f7}{get\-Size} (\hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} L)
+\item 
+\hyperlink{common_8h_a127a96e09108f503cca20256eaa4ddff}{Boolean} \hyperlink{List_8h_a43f64a19c9aafabbd572908151547fe2}{is\-Empty} (\hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} L)
+\item 
+void \hyperlink{List_8h_a476cc4f9f3eac74de69922b337d3f5d4}{add\-At\-Front} (\hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} \hyperlink{structlist}{list}, \hyperlink{Node_8h_aa6eec21621b8638e350fd0ec238a9715}{Node\-Ptr} \hyperlink{structnode}{node})
+\item 
+void \hyperlink{List_8h_a194ecb3333d63b8d9b65c9a1bc12e395}{add\-At\-Rear} (\hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} \hyperlink{structlist}{list}, \hyperlink{Node_8h_aa6eec21621b8638e350fd0ec238a9715}{Node\-Ptr} \hyperlink{structnode}{node})
+\item 
+\hyperlink{Node_8h_aa6eec21621b8638e350fd0ec238a9715}{Node\-Ptr} \hyperlink{List_8h_a21ea604b2c4b634c83152e4de532ca33}{remove\-Front} (\hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} \hyperlink{structlist}{list})
+\item 
+\hyperlink{Node_8h_aa6eec21621b8638e350fd0ec238a9715}{Node\-Ptr} \hyperlink{List_8h_a79b7613686651c0fdd9ba75859ab1cf4}{remove\-Rear} (\hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} \hyperlink{structlist}{list})
+\item 
+\hyperlink{Node_8h_aa6eec21621b8638e350fd0ec238a9715}{Node\-Ptr} \hyperlink{List_8h_a7759b3a50942a4d588c73757ce2e15bf}{remove\-Node} (\hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} \hyperlink{structlist}{list}, \hyperlink{Node_8h_aa6eec21621b8638e350fd0ec238a9715}{Node\-Ptr} \hyperlink{structnode}{node})
+\item 
+\hyperlink{Node_8h_aa6eec21621b8638e350fd0ec238a9715}{Node\-Ptr} \hyperlink{List_8h_aca61f76cf7de3fb0402d00ae542f8f8b}{search} (\hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} \hyperlink{structlist}{list}, unsigned long int)
+\item 
+void \hyperlink{List_8h_a98ef2e3e4d692de272b451a11015fdad}{reverse\-List} (\hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} L)
+\item 
+void \hyperlink{List_8h_a547d08e44a5f9e1e613aa3cee9f2e5c0}{print\-List} (\hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} L)
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{List_8h_aa89b8bc105d9a09d4e7c06e8b34078a7}{\index{List.\-h@{List.\-h}!List@{List}}
+\index{List@{List}!List.h@{List.\-h}}
+\subsubsection[{List}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf list} {\bf List}}}\label{List_8h_aa89b8bc105d9a09d4e7c06e8b34078a7}
+\hypertarget{List_8h_a861ccde58c51198da7548ab818f1bbdd}{\index{List.\-h@{List.\-h}!List\-Ptr@{List\-Ptr}}
+\index{List\-Ptr@{List\-Ptr}!List.h@{List.\-h}}
+\subsubsection[{List\-Ptr}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf list}$\ast$ {\bf List\-Ptr}}}\label{List_8h_a861ccde58c51198da7548ab818f1bbdd}
+
+
+\subsection{Function Documentation}
+\hypertarget{List_8h_a476cc4f9f3eac74de69922b337d3f5d4}{\index{List.\-h@{List.\-h}!add\-At\-Front@{add\-At\-Front}}
+\index{add\-At\-Front@{add\-At\-Front}!List.h@{List.\-h}}
+\subsubsection[{add\-At\-Front}]{\setlength{\rightskip}{0pt plus 5cm}void add\-At\-Front (
+\begin{DoxyParamCaption}
+\item[{{\bf List\-Ptr}}]{list, }
+\item[{{\bf Node\-Ptr}}]{node}
+\end{DoxyParamCaption}
+)}}\label{List_8h_a476cc4f9f3eac74de69922b337d3f5d4}
+\hypertarget{List_8h_a194ecb3333d63b8d9b65c9a1bc12e395}{\index{List.\-h@{List.\-h}!add\-At\-Rear@{add\-At\-Rear}}
+\index{add\-At\-Rear@{add\-At\-Rear}!List.h@{List.\-h}}
+\subsubsection[{add\-At\-Rear}]{\setlength{\rightskip}{0pt plus 5cm}void add\-At\-Rear (
+\begin{DoxyParamCaption}
+\item[{{\bf List\-Ptr}}]{list, }
+\item[{{\bf Node\-Ptr}}]{node}
+\end{DoxyParamCaption}
+)}}\label{List_8h_a194ecb3333d63b8d9b65c9a1bc12e395}
+\hypertarget{List_8h_a3858b264a79732d7b9be486f2f2e63b0}{\index{List.\-h@{List.\-h}!create\-List@{create\-List}}
+\index{create\-List@{create\-List}!List.h@{List.\-h}}
+\subsubsection[{create\-List}]{\setlength{\rightskip}{0pt plus 5cm}{\bf List\-Ptr} create\-List (
+\begin{DoxyParamCaption}
+\item[{unsigned long int($\ast$)(void $\ast$)}]{get\-Key, }
+\item[{char $\ast$($\ast$)(void $\ast$)}]{to\-String, }
+\item[{void($\ast$)(void $\ast$)}]{free\-Object, }
+\item[{int($\ast$)(void $\ast$, void $\ast$)}]{compare\-Function}
+\end{DoxyParamCaption}
+)}}\label{List_8h_a3858b264a79732d7b9be486f2f2e63b0}
+\hypertarget{List_8h_ae84ae05d522c39df123f60bca2b27dea}{\index{List.\-h@{List.\-h}!free\-List@{free\-List}}
+\index{free\-List@{free\-List}!List.h@{List.\-h}}
+\subsubsection[{free\-List}]{\setlength{\rightskip}{0pt plus 5cm}void free\-List (
+\begin{DoxyParamCaption}
+\item[{{\bf List\-Ptr}}]{L}
+\end{DoxyParamCaption}
+)}}\label{List_8h_ae84ae05d522c39df123f60bca2b27dea}
+\hypertarget{List_8h_ab3d2a46b4fedd016c3a03c297b89d8f7}{\index{List.\-h@{List.\-h}!get\-Size@{get\-Size}}
+\index{get\-Size@{get\-Size}!List.h@{List.\-h}}
+\subsubsection[{get\-Size}]{\setlength{\rightskip}{0pt plus 5cm}int get\-Size (
+\begin{DoxyParamCaption}
+\item[{{\bf List\-Ptr}}]{L}
+\end{DoxyParamCaption}
+)}}\label{List_8h_ab3d2a46b4fedd016c3a03c297b89d8f7}
+\hypertarget{List_8h_a43f64a19c9aafabbd572908151547fe2}{\index{List.\-h@{List.\-h}!is\-Empty@{is\-Empty}}
+\index{is\-Empty@{is\-Empty}!List.h@{List.\-h}}
+\subsubsection[{is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Boolean} is\-Empty (
+\begin{DoxyParamCaption}
+\item[{{\bf List\-Ptr}}]{L}
+\end{DoxyParamCaption}
+)}}\label{List_8h_a43f64a19c9aafabbd572908151547fe2}
+\hypertarget{List_8h_a547d08e44a5f9e1e613aa3cee9f2e5c0}{\index{List.\-h@{List.\-h}!print\-List@{print\-List}}
+\index{print\-List@{print\-List}!List.h@{List.\-h}}
+\subsubsection[{print\-List}]{\setlength{\rightskip}{0pt plus 5cm}void print\-List (
+\begin{DoxyParamCaption}
+\item[{{\bf List\-Ptr}}]{L}
+\end{DoxyParamCaption}
+)}}\label{List_8h_a547d08e44a5f9e1e613aa3cee9f2e5c0}
+\hypertarget{List_8h_a21ea604b2c4b634c83152e4de532ca33}{\index{List.\-h@{List.\-h}!remove\-Front@{remove\-Front}}
+\index{remove\-Front@{remove\-Front}!List.h@{List.\-h}}
+\subsubsection[{remove\-Front}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Node\-Ptr} remove\-Front (
+\begin{DoxyParamCaption}
+\item[{{\bf List\-Ptr}}]{list}
+\end{DoxyParamCaption}
+)}}\label{List_8h_a21ea604b2c4b634c83152e4de532ca33}
+\hypertarget{List_8h_a7759b3a50942a4d588c73757ce2e15bf}{\index{List.\-h@{List.\-h}!remove\-Node@{remove\-Node}}
+\index{remove\-Node@{remove\-Node}!List.h@{List.\-h}}
+\subsubsection[{remove\-Node}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Node\-Ptr} remove\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf List\-Ptr}}]{list, }
+\item[{{\bf Node\-Ptr}}]{node}
+\end{DoxyParamCaption}
+)}}\label{List_8h_a7759b3a50942a4d588c73757ce2e15bf}
+\hypertarget{List_8h_a79b7613686651c0fdd9ba75859ab1cf4}{\index{List.\-h@{List.\-h}!remove\-Rear@{remove\-Rear}}
+\index{remove\-Rear@{remove\-Rear}!List.h@{List.\-h}}
+\subsubsection[{remove\-Rear}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Node\-Ptr} remove\-Rear (
+\begin{DoxyParamCaption}
+\item[{{\bf List\-Ptr}}]{list}
+\end{DoxyParamCaption}
+)}}\label{List_8h_a79b7613686651c0fdd9ba75859ab1cf4}
+\hypertarget{List_8h_a98ef2e3e4d692de272b451a11015fdad}{\index{List.\-h@{List.\-h}!reverse\-List@{reverse\-List}}
+\index{reverse\-List@{reverse\-List}!List.h@{List.\-h}}
+\subsubsection[{reverse\-List}]{\setlength{\rightskip}{0pt plus 5cm}void reverse\-List (
+\begin{DoxyParamCaption}
+\item[{{\bf List\-Ptr}}]{L}
+\end{DoxyParamCaption}
+)}}\label{List_8h_a98ef2e3e4d692de272b451a11015fdad}
+\hypertarget{List_8h_aca61f76cf7de3fb0402d00ae542f8f8b}{\index{List.\-h@{List.\-h}!search@{search}}
+\index{search@{search}!List.h@{List.\-h}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Node\-Ptr} search (
+\begin{DoxyParamCaption}
+\item[{{\bf List\-Ptr}}]{list, }
+\item[{unsigned long}]{int}
+\end{DoxyParamCaption}
+)}}\label{List_8h_aca61f76cf7de3fb0402d00ae542f8f8b}

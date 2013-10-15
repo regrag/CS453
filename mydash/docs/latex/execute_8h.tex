@@ -1,0 +1,108 @@
+\hypertarget{execute_8h}{\section{execute.\-h File Reference}
+\label{execute_8h}\index{execute.\-h@{execute.\-h}}
+}
+{\ttfamily \#include \char`\"{}ourhdr.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}List.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Job.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{execute_8h_a185c9d277c4b50490f82ace687bca56f}{run\-Job} (char $\ast$$\ast$args, char $\ast$line\-Copy, int job\-Count, \hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} \hyperlink{structlist}{list})
+\begin{DoxyCompactList}\small\item\em run\-Job will run a program based on the passed in arguments. \end{DoxyCompactList}\item 
+int \hyperlink{execute_8h_a36c2e53a0af2a2f69120799582cc5736}{run\-Background\-Job} (char $\ast$$\ast$args, char $\ast$line\-Copy, int i, int job\-Count, \hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} \hyperlink{structlist}{list})
+\begin{DoxyCompactList}\small\item\em run\-Job will run a program in the background based on the passed in arguments. \end{DoxyCompactList}\item 
+void \hyperlink{execute_8h_a8fcc3049befd877f71cd0418633966aa}{update\-Background\-Jobs} (\hyperlink{List_8h_a861ccde58c51198da7548ab818f1bbdd}{List\-Ptr} \hyperlink{structlist}{list})
+\begin{DoxyCompactList}\small\item\em update\-Background\-Jobs will update the report status of all jobs in the job list. \end{DoxyCompactList}\item 
+void \hyperlink{execute_8h_ad8d1b7e0b431d9617cd6abb86b12c1b2}{custom\-Print\-List} (\hyperlink{Node_8h_aa6eec21621b8638e350fd0ec238a9715}{Node\-Ptr} \hyperlink{structnode}{node}, char $\ast$($\ast$\hyperlink{Job_8h_a35f2c02ea31a2d3e044a11ba7aa3c4b6}{to\-String})(void $\ast$))
+\begin{DoxyCompactList}\small\item\em custom\-Print\-List prints the list to the specified format required by the assingment doc. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{execute_8h_ad8d1b7e0b431d9617cd6abb86b12c1b2}{\index{execute.\-h@{execute.\-h}!custom\-Print\-List@{custom\-Print\-List}}
+\index{custom\-Print\-List@{custom\-Print\-List}!execute.h@{execute.\-h}}
+\subsubsection[{custom\-Print\-List}]{\setlength{\rightskip}{0pt plus 5cm}void custom\-Print\-List (
+\begin{DoxyParamCaption}
+\item[{{\bf Node\-Ptr}}]{node, }
+\item[{char $\ast$($\ast$)(void $\ast$)}]{to\-String}
+\end{DoxyParamCaption}
+)}}\label{execute_8h_ad8d1b7e0b431d9617cd6abb86b12c1b2}
+
+
+custom\-Print\-List prints the list to the specified format required by the assingment doc. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & is a pointer to the node you wish to begin printing at. (generally head) \\
+\hline
+{\em to\-String} & is a function pointer to the to\-String method of the data inside the nodes. \\
+\hline
+\end{DoxyParams}
+\hypertarget{execute_8h_a36c2e53a0af2a2f69120799582cc5736}{\index{execute.\-h@{execute.\-h}!run\-Background\-Job@{run\-Background\-Job}}
+\index{run\-Background\-Job@{run\-Background\-Job}!execute.h@{execute.\-h}}
+\subsubsection[{run\-Background\-Job}]{\setlength{\rightskip}{0pt plus 5cm}int run\-Background\-Job (
+\begin{DoxyParamCaption}
+\item[{char $\ast$$\ast$}]{args, }
+\item[{char $\ast$}]{line\-Copy, }
+\item[{int}]{i, }
+\item[{int}]{job\-Count, }
+\item[{{\bf List\-Ptr}}]{list}
+\end{DoxyParamCaption}
+)}}\label{execute_8h_a36c2e53a0af2a2f69120799582cc5736}
+
+
+run\-Job will run a program in the background based on the passed in arguments. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & contains the program name and arguments respectively. \\
+\hline
+{\em line\-Copy} & contains the original line read from the prompt, used to add the command to the job list. \\
+\hline
+{\em i} & is the counter for position in args. \\
+\hline
+{\em job\-Count} & is the count of jobs. \\
+\hline
+{\em list} & is a pointer to the jobs list. \\
+\hline
+\end{DoxyParams}
+\hypertarget{execute_8h_a185c9d277c4b50490f82ace687bca56f}{\index{execute.\-h@{execute.\-h}!run\-Job@{run\-Job}}
+\index{run\-Job@{run\-Job}!execute.h@{execute.\-h}}
+\subsubsection[{run\-Job}]{\setlength{\rightskip}{0pt plus 5cm}int run\-Job (
+\begin{DoxyParamCaption}
+\item[{char $\ast$$\ast$}]{args, }
+\item[{char $\ast$}]{line\-Copy, }
+\item[{int}]{job\-Count, }
+\item[{{\bf List\-Ptr}}]{list}
+\end{DoxyParamCaption}
+)}}\label{execute_8h_a185c9d277c4b50490f82ace687bca56f}
+
+
+run\-Job will run a program based on the passed in arguments. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & contains the program name and arguments respectively. \\
+\hline
+{\em line\-Copy} & contains the original line read from the prompt, used to add the command to the job list. \\
+\hline
+{\em job\-Count} & is the count of jobs. \\
+\hline
+{\em list} & is a pointer to the jobs list. \\
+\hline
+\end{DoxyParams}
+\hypertarget{execute_8h_a8fcc3049befd877f71cd0418633966aa}{\index{execute.\-h@{execute.\-h}!update\-Background\-Jobs@{update\-Background\-Jobs}}
+\index{update\-Background\-Jobs@{update\-Background\-Jobs}!execute.h@{execute.\-h}}
+\subsubsection[{update\-Background\-Jobs}]{\setlength{\rightskip}{0pt plus 5cm}void update\-Background\-Jobs (
+\begin{DoxyParamCaption}
+\item[{{\bf List\-Ptr}}]{list}
+\end{DoxyParamCaption}
+)}}\label{execute_8h_a8fcc3049befd877f71cd0418633966aa}
+
+
+update\-Background\-Jobs will update the report status of all jobs in the job list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & is a pointer to the jobs list. \\
+\hline
+\end{DoxyParams}

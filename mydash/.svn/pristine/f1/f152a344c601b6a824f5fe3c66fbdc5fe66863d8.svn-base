@@ -1,0 +1,565 @@
+\hypertarget{ourhdr_8h}{\section{ourhdr.\-h File Reference}
+\label{ourhdr_8h}\index{ourhdr.\-h@{ourhdr.\-h}}
+}
+{\ttfamily \#include $<$sys/types.\-h$>$}\\*
+{\ttfamily \#include $<$sys/wait.\-h$>$}\\*
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$sysexits.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$unistd.\-h$>$}\\*
+{\ttfamily \#include $<$pwd.\-h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{ourhdr_8h_a3e937c42922f7601edb17b747602c471}{M\-A\-X\-L\-I\-N\-E}~4096			/$\ast$ \hyperlink{ourhdr_8h_affe776513b24d84b39af8ab0930fef7f}{max} line length $\ast$/
+\item 
+\#define \hyperlink{ourhdr_8h_a0156511b6afae79b47bfbbe7398c0ab5}{F\-I\-L\-E\-\_\-\-M\-O\-D\-E}~(S\-\_\-\-I\-R\-U\-S\-R $|$ S\-\_\-\-I\-W\-U\-S\-R $|$ S\-\_\-\-I\-R\-G\-R\-P $|$ S\-\_\-\-I\-R\-O\-T\-H)
+\item 
+\#define \hyperlink{ourhdr_8h_a2fb2887e798c593bd4528b8daad75212}{D\-I\-R\-\_\-\-M\-O\-D\-E}~(\hyperlink{ourhdr_8h_a0156511b6afae79b47bfbbe7398c0ab5}{F\-I\-L\-E\-\_\-\-M\-O\-D\-E} $|$ S\-\_\-\-I\-X\-U\-S\-R $|$ S\-\_\-\-I\-X\-G\-R\-P $|$ S\-\_\-\-I\-X\-O\-T\-H)
+\item 
+\#define \hyperlink{ourhdr_8h_ac6afabdc09a49a433ee19d8a9486056d}{min}(a, b)~((a) $<$ (b) ? (a) \-: (b))
+\item 
+\#define \hyperlink{ourhdr_8h_affe776513b24d84b39af8ab0930fef7f}{max}(a, b)~((a) $>$ (b) ? (a) \-: (b))
+\item 
+\#define \hyperlink{ourhdr_8h_af3fd37d69e7035b61796f211cc74d329}{read\-\_\-lock}(fd, offset, whence, len)~\hyperlink{ourhdr_8h_a8c97be9f401753fca856551e1dccdbee}{lock\-\_\-reg}(fd, F\-\_\-\-S\-E\-T\-L\-K, F\-\_\-\-R\-D\-L\-C\-K, offset, whence, len)
+\item 
+\#define \hyperlink{ourhdr_8h_a4c6c3fa1cb3646e2c0871b3dd303f002}{readw\-\_\-lock}(fd, offset, whence, len)~\hyperlink{ourhdr_8h_a8c97be9f401753fca856551e1dccdbee}{lock\-\_\-reg}(fd, F\-\_\-\-S\-E\-T\-L\-K\-W, F\-\_\-\-R\-D\-L\-C\-K, offset, whence, len)
+\item 
+\#define \hyperlink{ourhdr_8h_a38e68ca5822fa748ff9b8971a17ee4a9}{write\-\_\-lock}(fd, offset, whence, len)~\hyperlink{ourhdr_8h_a8c97be9f401753fca856551e1dccdbee}{lock\-\_\-reg}(fd, F\-\_\-\-S\-E\-T\-L\-K, F\-\_\-\-W\-R\-L\-C\-K, offset, whence, len)
+\item 
+\#define \hyperlink{ourhdr_8h_a9fc57d20e333f6b69a851d88556ee90a}{writew\-\_\-lock}(fd, offset, whence, len)~\hyperlink{ourhdr_8h_a8c97be9f401753fca856551e1dccdbee}{lock\-\_\-reg}(fd, F\-\_\-\-S\-E\-T\-L\-K\-W, F\-\_\-\-W\-R\-L\-C\-K, offset, whence, len)
+\item 
+\#define \hyperlink{ourhdr_8h_a8f31c5de32330f57c8541b261e9848ad}{un\-\_\-lock}(fd, offset, whence, len)~\hyperlink{ourhdr_8h_a8c97be9f401753fca856551e1dccdbee}{lock\-\_\-reg}(fd, F\-\_\-\-S\-E\-T\-L\-K, F\-\_\-\-U\-N\-L\-C\-K, offset, whence, len)
+\item 
+\#define \hyperlink{ourhdr_8h_a8793951edac325c9fc610a8a16b9bb61}{is\-\_\-readlock}(fd, offset, whence, len)~\hyperlink{ourhdr_8h_a981f49eac490c986b9d17648522a86f3}{lock\-\_\-test}(fd, F\-\_\-\-R\-D\-L\-C\-K, offset, whence, len)
+\item 
+\#define \hyperlink{ourhdr_8h_a3bdbf2efd8b47d833f1ddffa5c1fbd0c}{is\-\_\-writelock}(fd, offset, whence, len)~\hyperlink{ourhdr_8h_a981f49eac490c986b9d17648522a86f3}{lock\-\_\-test}(fd, F\-\_\-\-W\-R\-L\-C\-K, offset, whence, len)
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void \hyperlink{ourhdr_8h_ad44ec8ef7177e98b868c0efb6c0af973}{Sigfunc} (int)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{ourhdr_8h_a90a94271122edb0b22cc15c4c16a9501}{path\-\_\-alloc} (int $\ast$)
+\item 
+int \hyperlink{ourhdr_8h_a54c787ed21bcb6425abd1f735d0d3849}{open\-\_\-max} (void)
+\item 
+void \hyperlink{ourhdr_8h_a02a30e4be9cfd76f29bb1ea424381a8d}{clr\-\_\-fl} (int, int)
+\item 
+void \hyperlink{ourhdr_8h_ae02c4a2eb926f2d591b1f2a2eeedf086}{set\-\_\-fl} (int, int)
+\item 
+void \hyperlink{ourhdr_8h_a7542c0f833c9ee0d0a94beb9868b7fb5}{pr\-\_\-exit} (int)
+\item 
+void \hyperlink{ourhdr_8h_afbbc9c8ac4195fd802caa5cfb80bd5ca}{pr\-\_\-mask} (const char $\ast$)
+\item 
+\hyperlink{ourhdr_8h_ad44ec8ef7177e98b868c0efb6c0af973}{Sigfunc} $\ast$ \hyperlink{ourhdr_8h_a28c31b8f5b83b3455fe32f6f10ea1182}{signal\-\_\-intr} (int, \hyperlink{ourhdr_8h_ad44ec8ef7177e98b868c0efb6c0af973}{Sigfunc} $\ast$)
+\item 
+int \hyperlink{ourhdr_8h_afb5a23acb1f08637c5826e41ed6efebe}{tty\-\_\-cbreak} (int)
+\item 
+int \hyperlink{ourhdr_8h_a2a76876c369dc05fde0ed7ada585df88}{tty\-\_\-raw} (int)
+\item 
+int \hyperlink{ourhdr_8h_a1409126bcab36166c89d433edad33b40}{tty\-\_\-reset} (int)
+\item 
+void \hyperlink{ourhdr_8h_addfdf23db859376edbb6f00856ec6452}{tty\-\_\-atexit} (void)
+\item 
+void \hyperlink{ourhdr_8h_a349fefc7a9d3d631e780155d50ae504c}{sleep\-\_\-us} (unsigned int)
+\item 
+ssize\-\_\-t \hyperlink{ourhdr_8h_aa43b4ed7f681900742bf75cee8d4aeee}{readn} (int, void $\ast$, size\-\_\-t)
+\item 
+ssize\-\_\-t \hyperlink{ourhdr_8h_a86d677d292a2fb0674851f1b4d11a36f}{writen} (int, const void $\ast$, size\-\_\-t)
+\item 
+int \hyperlink{ourhdr_8h_ab0c78c4962794992755b9e39517292db}{daemon\-\_\-init} (void)
+\item 
+int \hyperlink{ourhdr_8h_ad44e4c8b71f90c3506e5a64d84ed1085}{s\-\_\-pipe} (int $\ast$)
+\item 
+int \hyperlink{ourhdr_8h_a1af4e703259b9253bc02ca372c5c8525}{recv\-\_\-fd} (int, ssize\-\_\-t($\ast$func)(int, const void $\ast$, size\-\_\-t))
+\item 
+int \hyperlink{ourhdr_8h_ac8061214f9d5ca6e9e0f6532bbdd970b}{send\-\_\-fd} (int, int)
+\item 
+int \hyperlink{ourhdr_8h_aae42fb6e9a47886a911d59429854fce4}{send\-\_\-err} (int, int, const char $\ast$)
+\item 
+int \hyperlink{ourhdr_8h_a3c2436dad2811839a0c246827a10e9c0}{serv\-\_\-listen} (const char $\ast$)
+\item 
+int \hyperlink{ourhdr_8h_a1bc5d27c203d4916d5e20b44a72f9238}{serv\-\_\-accept} (int, uid\-\_\-t $\ast$)
+\item 
+int \hyperlink{ourhdr_8h_a41c136da261d7767e19009dd321cf554}{cli\-\_\-conn} (const char $\ast$)
+\item 
+int \hyperlink{ourhdr_8h_acf810cec1786b0268a097a3e7ece9464}{buf\-\_\-args} (char $\ast$, int($\ast$func)(int, char $\ast$$\ast$))
+\item 
+int \hyperlink{ourhdr_8h_a5f32efe7484de6313ac634dccbd10580}{ptym\-\_\-open} (char $\ast$)
+\item 
+int \hyperlink{ourhdr_8h_a503e88845316bc9bef76b4dc6d2916f5}{ptys\-\_\-open} (int, char $\ast$)
+\item 
+int \hyperlink{ourhdr_8h_a8c97be9f401753fca856551e1dccdbee}{lock\-\_\-reg} (int, int, int, off\-\_\-t, int, off\-\_\-t)
+\item 
+pid\-\_\-t \hyperlink{ourhdr_8h_a981f49eac490c986b9d17648522a86f3}{lock\-\_\-test} (int, int, off\-\_\-t, int, off\-\_\-t)
+\item 
+void \hyperlink{ourhdr_8h_a7149c6edbf0dd6d1da7f786d62133d16}{err\-\_\-dump} (const char $\ast$,...)
+\item 
+void \hyperlink{ourhdr_8h_a5527eeda10156ad7dd2e3dbb92fa70dd}{err\-\_\-msg} (const char $\ast$,...)
+\item 
+void \hyperlink{ourhdr_8h_a856c1e55e117fb3d1488ca121ef7f9c6}{err\-\_\-quit} (const char $\ast$,...)
+\item 
+void \hyperlink{ourhdr_8h_a98255ebf2a46056076b0ab6e86e39d37}{err\-\_\-ret} (const char $\ast$,...)
+\item 
+void \hyperlink{ourhdr_8h_a6c692d7c47e9845a3b8ac557d9edb3bd}{err\-\_\-sys} (const char $\ast$,...)
+\item 
+void \hyperlink{ourhdr_8h_a59b7c780e6966a93fe3df27a895c469b}{log\-\_\-msg} (const char $\ast$,...)
+\item 
+void \hyperlink{ourhdr_8h_aa3bce55c6b6a98e5b037c51e275a939a}{log\-\_\-open} (const char $\ast$, int, int)
+\item 
+void \hyperlink{ourhdr_8h_a4653a58b179d3b3e62632a620ea31cc3}{log\-\_\-quit} (const char $\ast$,...)
+\item 
+void \hyperlink{ourhdr_8h_a685e656afa77a413b014223d328bea70}{log\-\_\-ret} (const char $\ast$,...)
+\item 
+void \hyperlink{ourhdr_8h_abcc8d20b1a16c9137a9d4d4189ce8949}{log\-\_\-sys} (const char $\ast$,...)
+\item 
+void \hyperlink{ourhdr_8h_a1d85cc5102129ac56c73a6d27a8dfc4c}{T\-E\-L\-L\-\_\-\-W\-A\-I\-T} (void)
+\item 
+void \hyperlink{ourhdr_8h_ace4abbaf38dfe2f24031afd4f539e2ea}{T\-E\-L\-L\-\_\-\-P\-A\-R\-E\-N\-T} (pid\-\_\-t)
+\item 
+void \hyperlink{ourhdr_8h_af9236481829b4d6b8164c01ad950ab24}{T\-E\-L\-L\-\_\-\-C\-H\-I\-L\-D} (pid\-\_\-t)
+\item 
+void \hyperlink{ourhdr_8h_ab6174ba4691d62cfd5646da95876e61f}{W\-A\-I\-T\-\_\-\-P\-A\-R\-E\-N\-T} (void)
+\item 
+void \hyperlink{ourhdr_8h_a53de5c3ab7733ac31c04381fb2e0934d}{W\-A\-I\-T\-\_\-\-C\-H\-I\-L\-D} (void)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{ourhdr_8h_a2fb2887e798c593bd4528b8daad75212}{\index{ourhdr.\-h@{ourhdr.\-h}!D\-I\-R\-\_\-\-M\-O\-D\-E@{D\-I\-R\-\_\-\-M\-O\-D\-E}}
+\index{D\-I\-R\-\_\-\-M\-O\-D\-E@{D\-I\-R\-\_\-\-M\-O\-D\-E}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{D\-I\-R\-\_\-\-M\-O\-D\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\-I\-R\-\_\-\-M\-O\-D\-E~({\bf F\-I\-L\-E\-\_\-\-M\-O\-D\-E} $|$ S\-\_\-\-I\-X\-U\-S\-R $|$ S\-\_\-\-I\-X\-G\-R\-P $|$ S\-\_\-\-I\-X\-O\-T\-H)}}\label{ourhdr_8h_a2fb2887e798c593bd4528b8daad75212}
+\hypertarget{ourhdr_8h_a0156511b6afae79b47bfbbe7398c0ab5}{\index{ourhdr.\-h@{ourhdr.\-h}!F\-I\-L\-E\-\_\-\-M\-O\-D\-E@{F\-I\-L\-E\-\_\-\-M\-O\-D\-E}}
+\index{F\-I\-L\-E\-\_\-\-M\-O\-D\-E@{F\-I\-L\-E\-\_\-\-M\-O\-D\-E}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{F\-I\-L\-E\-\_\-\-M\-O\-D\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\-I\-L\-E\-\_\-\-M\-O\-D\-E~(S\-\_\-\-I\-R\-U\-S\-R $|$ S\-\_\-\-I\-W\-U\-S\-R $|$ S\-\_\-\-I\-R\-G\-R\-P $|$ S\-\_\-\-I\-R\-O\-T\-H)}}\label{ourhdr_8h_a0156511b6afae79b47bfbbe7398c0ab5}
+\hypertarget{ourhdr_8h_a8793951edac325c9fc610a8a16b9bb61}{\index{ourhdr.\-h@{ourhdr.\-h}!is\-\_\-readlock@{is\-\_\-readlock}}
+\index{is\-\_\-readlock@{is\-\_\-readlock}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{is\-\_\-readlock}]{\setlength{\rightskip}{0pt plus 5cm}\#define is\-\_\-readlock(
+\begin{DoxyParamCaption}
+\item[{}]{fd, }
+\item[{}]{offset, }
+\item[{}]{whence, }
+\item[{}]{len}
+\end{DoxyParamCaption}
+)~{\bf lock\-\_\-test}(fd, F\-\_\-\-R\-D\-L\-C\-K, offset, whence, len)}}\label{ourhdr_8h_a8793951edac325c9fc610a8a16b9bb61}
+\hypertarget{ourhdr_8h_a3bdbf2efd8b47d833f1ddffa5c1fbd0c}{\index{ourhdr.\-h@{ourhdr.\-h}!is\-\_\-writelock@{is\-\_\-writelock}}
+\index{is\-\_\-writelock@{is\-\_\-writelock}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{is\-\_\-writelock}]{\setlength{\rightskip}{0pt plus 5cm}\#define is\-\_\-writelock(
+\begin{DoxyParamCaption}
+\item[{}]{fd, }
+\item[{}]{offset, }
+\item[{}]{whence, }
+\item[{}]{len}
+\end{DoxyParamCaption}
+)~{\bf lock\-\_\-test}(fd, F\-\_\-\-W\-R\-L\-C\-K, offset, whence, len)}}\label{ourhdr_8h_a3bdbf2efd8b47d833f1ddffa5c1fbd0c}
+\hypertarget{ourhdr_8h_affe776513b24d84b39af8ab0930fef7f}{\index{ourhdr.\-h@{ourhdr.\-h}!max@{max}}
+\index{max@{max}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{max}]{\setlength{\rightskip}{0pt plus 5cm}\#define max(
+\begin{DoxyParamCaption}
+\item[{}]{a, }
+\item[{}]{b}
+\end{DoxyParamCaption}
+)~((a) $>$ (b) ? (a) \-: (b))}}\label{ourhdr_8h_affe776513b24d84b39af8ab0930fef7f}
+\hypertarget{ourhdr_8h_a3e937c42922f7601edb17b747602c471}{\index{ourhdr.\-h@{ourhdr.\-h}!M\-A\-X\-L\-I\-N\-E@{M\-A\-X\-L\-I\-N\-E}}
+\index{M\-A\-X\-L\-I\-N\-E@{M\-A\-X\-L\-I\-N\-E}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{M\-A\-X\-L\-I\-N\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-A\-X\-L\-I\-N\-E~4096			/$\ast$ {\bf max} line length $\ast$/}}\label{ourhdr_8h_a3e937c42922f7601edb17b747602c471}
+\hypertarget{ourhdr_8h_ac6afabdc09a49a433ee19d8a9486056d}{\index{ourhdr.\-h@{ourhdr.\-h}!min@{min}}
+\index{min@{min}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{min}]{\setlength{\rightskip}{0pt plus 5cm}\#define min(
+\begin{DoxyParamCaption}
+\item[{}]{a, }
+\item[{}]{b}
+\end{DoxyParamCaption}
+)~((a) $<$ (b) ? (a) \-: (b))}}\label{ourhdr_8h_ac6afabdc09a49a433ee19d8a9486056d}
+\hypertarget{ourhdr_8h_af3fd37d69e7035b61796f211cc74d329}{\index{ourhdr.\-h@{ourhdr.\-h}!read\-\_\-lock@{read\-\_\-lock}}
+\index{read\-\_\-lock@{read\-\_\-lock}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{read\-\_\-lock}]{\setlength{\rightskip}{0pt plus 5cm}\#define read\-\_\-lock(
+\begin{DoxyParamCaption}
+\item[{}]{fd, }
+\item[{}]{offset, }
+\item[{}]{whence, }
+\item[{}]{len}
+\end{DoxyParamCaption}
+)~{\bf lock\-\_\-reg}(fd, F\-\_\-\-S\-E\-T\-L\-K, F\-\_\-\-R\-D\-L\-C\-K, offset, whence, len)}}\label{ourhdr_8h_af3fd37d69e7035b61796f211cc74d329}
+\hypertarget{ourhdr_8h_a4c6c3fa1cb3646e2c0871b3dd303f002}{\index{ourhdr.\-h@{ourhdr.\-h}!readw\-\_\-lock@{readw\-\_\-lock}}
+\index{readw\-\_\-lock@{readw\-\_\-lock}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{readw\-\_\-lock}]{\setlength{\rightskip}{0pt plus 5cm}\#define readw\-\_\-lock(
+\begin{DoxyParamCaption}
+\item[{}]{fd, }
+\item[{}]{offset, }
+\item[{}]{whence, }
+\item[{}]{len}
+\end{DoxyParamCaption}
+)~{\bf lock\-\_\-reg}(fd, F\-\_\-\-S\-E\-T\-L\-K\-W, F\-\_\-\-R\-D\-L\-C\-K, offset, whence, len)}}\label{ourhdr_8h_a4c6c3fa1cb3646e2c0871b3dd303f002}
+\hypertarget{ourhdr_8h_a8f31c5de32330f57c8541b261e9848ad}{\index{ourhdr.\-h@{ourhdr.\-h}!un\-\_\-lock@{un\-\_\-lock}}
+\index{un\-\_\-lock@{un\-\_\-lock}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{un\-\_\-lock}]{\setlength{\rightskip}{0pt plus 5cm}\#define un\-\_\-lock(
+\begin{DoxyParamCaption}
+\item[{}]{fd, }
+\item[{}]{offset, }
+\item[{}]{whence, }
+\item[{}]{len}
+\end{DoxyParamCaption}
+)~{\bf lock\-\_\-reg}(fd, F\-\_\-\-S\-E\-T\-L\-K, F\-\_\-\-U\-N\-L\-C\-K, offset, whence, len)}}\label{ourhdr_8h_a8f31c5de32330f57c8541b261e9848ad}
+\hypertarget{ourhdr_8h_a38e68ca5822fa748ff9b8971a17ee4a9}{\index{ourhdr.\-h@{ourhdr.\-h}!write\-\_\-lock@{write\-\_\-lock}}
+\index{write\-\_\-lock@{write\-\_\-lock}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{write\-\_\-lock}]{\setlength{\rightskip}{0pt plus 5cm}\#define write\-\_\-lock(
+\begin{DoxyParamCaption}
+\item[{}]{fd, }
+\item[{}]{offset, }
+\item[{}]{whence, }
+\item[{}]{len}
+\end{DoxyParamCaption}
+)~{\bf lock\-\_\-reg}(fd, F\-\_\-\-S\-E\-T\-L\-K, F\-\_\-\-W\-R\-L\-C\-K, offset, whence, len)}}\label{ourhdr_8h_a38e68ca5822fa748ff9b8971a17ee4a9}
+\hypertarget{ourhdr_8h_a9fc57d20e333f6b69a851d88556ee90a}{\index{ourhdr.\-h@{ourhdr.\-h}!writew\-\_\-lock@{writew\-\_\-lock}}
+\index{writew\-\_\-lock@{writew\-\_\-lock}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{writew\-\_\-lock}]{\setlength{\rightskip}{0pt plus 5cm}\#define writew\-\_\-lock(
+\begin{DoxyParamCaption}
+\item[{}]{fd, }
+\item[{}]{offset, }
+\item[{}]{whence, }
+\item[{}]{len}
+\end{DoxyParamCaption}
+)~{\bf lock\-\_\-reg}(fd, F\-\_\-\-S\-E\-T\-L\-K\-W, F\-\_\-\-W\-R\-L\-C\-K, offset, whence, len)}}\label{ourhdr_8h_a9fc57d20e333f6b69a851d88556ee90a}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{ourhdr_8h_ad44ec8ef7177e98b868c0efb6c0af973}{\index{ourhdr.\-h@{ourhdr.\-h}!Sigfunc@{Sigfunc}}
+\index{Sigfunc@{Sigfunc}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{Sigfunc}]{\setlength{\rightskip}{0pt plus 5cm}typedef void Sigfunc(int)}}\label{ourhdr_8h_ad44ec8ef7177e98b868c0efb6c0af973}
+
+
+\subsection{Function Documentation}
+\hypertarget{ourhdr_8h_acf810cec1786b0268a097a3e7ece9464}{\index{ourhdr.\-h@{ourhdr.\-h}!buf\-\_\-args@{buf\-\_\-args}}
+\index{buf\-\_\-args@{buf\-\_\-args}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{buf\-\_\-args}]{\setlength{\rightskip}{0pt plus 5cm}int buf\-\_\-args (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{, }
+\item[{int($\ast$)(int, char $\ast$$\ast$)}]{func}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_acf810cec1786b0268a097a3e7ece9464}
+\hypertarget{ourhdr_8h_a41c136da261d7767e19009dd321cf554}{\index{ourhdr.\-h@{ourhdr.\-h}!cli\-\_\-conn@{cli\-\_\-conn}}
+\index{cli\-\_\-conn@{cli\-\_\-conn}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{cli\-\_\-conn}]{\setlength{\rightskip}{0pt plus 5cm}int cli\-\_\-conn (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a41c136da261d7767e19009dd321cf554}
+\hypertarget{ourhdr_8h_a02a30e4be9cfd76f29bb1ea424381a8d}{\index{ourhdr.\-h@{ourhdr.\-h}!clr\-\_\-fl@{clr\-\_\-fl}}
+\index{clr\-\_\-fl@{clr\-\_\-fl}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{clr\-\_\-fl}]{\setlength{\rightskip}{0pt plus 5cm}void clr\-\_\-fl (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a02a30e4be9cfd76f29bb1ea424381a8d}
+\hypertarget{ourhdr_8h_ab0c78c4962794992755b9e39517292db}{\index{ourhdr.\-h@{ourhdr.\-h}!daemon\-\_\-init@{daemon\-\_\-init}}
+\index{daemon\-\_\-init@{daemon\-\_\-init}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{daemon\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}int daemon\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_ab0c78c4962794992755b9e39517292db}
+\hypertarget{ourhdr_8h_a7149c6edbf0dd6d1da7f786d62133d16}{\index{ourhdr.\-h@{ourhdr.\-h}!err\-\_\-dump@{err\-\_\-dump}}
+\index{err\-\_\-dump@{err\-\_\-dump}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{err\-\_\-dump}]{\setlength{\rightskip}{0pt plus 5cm}void err\-\_\-dump (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a7149c6edbf0dd6d1da7f786d62133d16}
+\hypertarget{ourhdr_8h_a5527eeda10156ad7dd2e3dbb92fa70dd}{\index{ourhdr.\-h@{ourhdr.\-h}!err\-\_\-msg@{err\-\_\-msg}}
+\index{err\-\_\-msg@{err\-\_\-msg}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{err\-\_\-msg}]{\setlength{\rightskip}{0pt plus 5cm}void err\-\_\-msg (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a5527eeda10156ad7dd2e3dbb92fa70dd}
+\hypertarget{ourhdr_8h_a856c1e55e117fb3d1488ca121ef7f9c6}{\index{ourhdr.\-h@{ourhdr.\-h}!err\-\_\-quit@{err\-\_\-quit}}
+\index{err\-\_\-quit@{err\-\_\-quit}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{err\-\_\-quit}]{\setlength{\rightskip}{0pt plus 5cm}void err\-\_\-quit (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a856c1e55e117fb3d1488ca121ef7f9c6}
+\hypertarget{ourhdr_8h_a98255ebf2a46056076b0ab6e86e39d37}{\index{ourhdr.\-h@{ourhdr.\-h}!err\-\_\-ret@{err\-\_\-ret}}
+\index{err\-\_\-ret@{err\-\_\-ret}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{err\-\_\-ret}]{\setlength{\rightskip}{0pt plus 5cm}void err\-\_\-ret (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a98255ebf2a46056076b0ab6e86e39d37}
+\hypertarget{ourhdr_8h_a6c692d7c47e9845a3b8ac557d9edb3bd}{\index{ourhdr.\-h@{ourhdr.\-h}!err\-\_\-sys@{err\-\_\-sys}}
+\index{err\-\_\-sys@{err\-\_\-sys}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{err\-\_\-sys}]{\setlength{\rightskip}{0pt plus 5cm}void err\-\_\-sys (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a6c692d7c47e9845a3b8ac557d9edb3bd}
+\hypertarget{ourhdr_8h_a8c97be9f401753fca856551e1dccdbee}{\index{ourhdr.\-h@{ourhdr.\-h}!lock\-\_\-reg@{lock\-\_\-reg}}
+\index{lock\-\_\-reg@{lock\-\_\-reg}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{lock\-\_\-reg}]{\setlength{\rightskip}{0pt plus 5cm}int lock\-\_\-reg (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{int}]{, }
+\item[{int}]{, }
+\item[{off\-\_\-t}]{, }
+\item[{int}]{, }
+\item[{off\-\_\-t}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a8c97be9f401753fca856551e1dccdbee}
+\hypertarget{ourhdr_8h_a981f49eac490c986b9d17648522a86f3}{\index{ourhdr.\-h@{ourhdr.\-h}!lock\-\_\-test@{lock\-\_\-test}}
+\index{lock\-\_\-test@{lock\-\_\-test}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{lock\-\_\-test}]{\setlength{\rightskip}{0pt plus 5cm}pid\-\_\-t lock\-\_\-test (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{int}]{, }
+\item[{off\-\_\-t}]{, }
+\item[{int}]{, }
+\item[{off\-\_\-t}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a981f49eac490c986b9d17648522a86f3}
+\hypertarget{ourhdr_8h_a59b7c780e6966a93fe3df27a895c469b}{\index{ourhdr.\-h@{ourhdr.\-h}!log\-\_\-msg@{log\-\_\-msg}}
+\index{log\-\_\-msg@{log\-\_\-msg}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{log\-\_\-msg}]{\setlength{\rightskip}{0pt plus 5cm}void log\-\_\-msg (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a59b7c780e6966a93fe3df27a895c469b}
+\hypertarget{ourhdr_8h_aa3bce55c6b6a98e5b037c51e275a939a}{\index{ourhdr.\-h@{ourhdr.\-h}!log\-\_\-open@{log\-\_\-open}}
+\index{log\-\_\-open@{log\-\_\-open}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{log\-\_\-open}]{\setlength{\rightskip}{0pt plus 5cm}void log\-\_\-open (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{, }
+\item[{int}]{, }
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_aa3bce55c6b6a98e5b037c51e275a939a}
+\hypertarget{ourhdr_8h_a4653a58b179d3b3e62632a620ea31cc3}{\index{ourhdr.\-h@{ourhdr.\-h}!log\-\_\-quit@{log\-\_\-quit}}
+\index{log\-\_\-quit@{log\-\_\-quit}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{log\-\_\-quit}]{\setlength{\rightskip}{0pt plus 5cm}void log\-\_\-quit (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a4653a58b179d3b3e62632a620ea31cc3}
+\hypertarget{ourhdr_8h_a685e656afa77a413b014223d328bea70}{\index{ourhdr.\-h@{ourhdr.\-h}!log\-\_\-ret@{log\-\_\-ret}}
+\index{log\-\_\-ret@{log\-\_\-ret}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{log\-\_\-ret}]{\setlength{\rightskip}{0pt plus 5cm}void log\-\_\-ret (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a685e656afa77a413b014223d328bea70}
+\hypertarget{ourhdr_8h_abcc8d20b1a16c9137a9d4d4189ce8949}{\index{ourhdr.\-h@{ourhdr.\-h}!log\-\_\-sys@{log\-\_\-sys}}
+\index{log\-\_\-sys@{log\-\_\-sys}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{log\-\_\-sys}]{\setlength{\rightskip}{0pt plus 5cm}void log\-\_\-sys (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_abcc8d20b1a16c9137a9d4d4189ce8949}
+\hypertarget{ourhdr_8h_a54c787ed21bcb6425abd1f735d0d3849}{\index{ourhdr.\-h@{ourhdr.\-h}!open\-\_\-max@{open\-\_\-max}}
+\index{open\-\_\-max@{open\-\_\-max}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{open\-\_\-max}]{\setlength{\rightskip}{0pt plus 5cm}int open\-\_\-max (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a54c787ed21bcb6425abd1f735d0d3849}
+\hypertarget{ourhdr_8h_a90a94271122edb0b22cc15c4c16a9501}{\index{ourhdr.\-h@{ourhdr.\-h}!path\-\_\-alloc@{path\-\_\-alloc}}
+\index{path\-\_\-alloc@{path\-\_\-alloc}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{path\-\_\-alloc}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ path\-\_\-alloc (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a90a94271122edb0b22cc15c4c16a9501}
+\hypertarget{ourhdr_8h_a7542c0f833c9ee0d0a94beb9868b7fb5}{\index{ourhdr.\-h@{ourhdr.\-h}!pr\-\_\-exit@{pr\-\_\-exit}}
+\index{pr\-\_\-exit@{pr\-\_\-exit}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{pr\-\_\-exit}]{\setlength{\rightskip}{0pt plus 5cm}void pr\-\_\-exit (
+\begin{DoxyParamCaption}
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a7542c0f833c9ee0d0a94beb9868b7fb5}
+\hypertarget{ourhdr_8h_afbbc9c8ac4195fd802caa5cfb80bd5ca}{\index{ourhdr.\-h@{ourhdr.\-h}!pr\-\_\-mask@{pr\-\_\-mask}}
+\index{pr\-\_\-mask@{pr\-\_\-mask}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{pr\-\_\-mask}]{\setlength{\rightskip}{0pt plus 5cm}void pr\-\_\-mask (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_afbbc9c8ac4195fd802caa5cfb80bd5ca}
+\hypertarget{ourhdr_8h_a5f32efe7484de6313ac634dccbd10580}{\index{ourhdr.\-h@{ourhdr.\-h}!ptym\-\_\-open@{ptym\-\_\-open}}
+\index{ptym\-\_\-open@{ptym\-\_\-open}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{ptym\-\_\-open}]{\setlength{\rightskip}{0pt plus 5cm}int ptym\-\_\-open (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a5f32efe7484de6313ac634dccbd10580}
+\hypertarget{ourhdr_8h_a503e88845316bc9bef76b4dc6d2916f5}{\index{ourhdr.\-h@{ourhdr.\-h}!ptys\-\_\-open@{ptys\-\_\-open}}
+\index{ptys\-\_\-open@{ptys\-\_\-open}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{ptys\-\_\-open}]{\setlength{\rightskip}{0pt plus 5cm}int ptys\-\_\-open (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{char $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a503e88845316bc9bef76b4dc6d2916f5}
+\hypertarget{ourhdr_8h_aa43b4ed7f681900742bf75cee8d4aeee}{\index{ourhdr.\-h@{ourhdr.\-h}!readn@{readn}}
+\index{readn@{readn}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{readn}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t readn (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{void $\ast$}]{, }
+\item[{size\-\_\-t}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_aa43b4ed7f681900742bf75cee8d4aeee}
+\hypertarget{ourhdr_8h_a1af4e703259b9253bc02ca372c5c8525}{\index{ourhdr.\-h@{ourhdr.\-h}!recv\-\_\-fd@{recv\-\_\-fd}}
+\index{recv\-\_\-fd@{recv\-\_\-fd}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{recv\-\_\-fd}]{\setlength{\rightskip}{0pt plus 5cm}int recv\-\_\-fd (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{ssize\-\_\-t($\ast$)(int, const void $\ast$, size\-\_\-t)}]{func}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a1af4e703259b9253bc02ca372c5c8525}
+\hypertarget{ourhdr_8h_ad44e4c8b71f90c3506e5a64d84ed1085}{\index{ourhdr.\-h@{ourhdr.\-h}!s\-\_\-pipe@{s\-\_\-pipe}}
+\index{s\-\_\-pipe@{s\-\_\-pipe}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{s\-\_\-pipe}]{\setlength{\rightskip}{0pt plus 5cm}int s\-\_\-pipe (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_ad44e4c8b71f90c3506e5a64d84ed1085}
+\hypertarget{ourhdr_8h_aae42fb6e9a47886a911d59429854fce4}{\index{ourhdr.\-h@{ourhdr.\-h}!send\-\_\-err@{send\-\_\-err}}
+\index{send\-\_\-err@{send\-\_\-err}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{send\-\_\-err}]{\setlength{\rightskip}{0pt plus 5cm}int send\-\_\-err (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{int}]{, }
+\item[{const char $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_aae42fb6e9a47886a911d59429854fce4}
+\hypertarget{ourhdr_8h_ac8061214f9d5ca6e9e0f6532bbdd970b}{\index{ourhdr.\-h@{ourhdr.\-h}!send\-\_\-fd@{send\-\_\-fd}}
+\index{send\-\_\-fd@{send\-\_\-fd}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{send\-\_\-fd}]{\setlength{\rightskip}{0pt plus 5cm}int send\-\_\-fd (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_ac8061214f9d5ca6e9e0f6532bbdd970b}
+\hypertarget{ourhdr_8h_a1bc5d27c203d4916d5e20b44a72f9238}{\index{ourhdr.\-h@{ourhdr.\-h}!serv\-\_\-accept@{serv\-\_\-accept}}
+\index{serv\-\_\-accept@{serv\-\_\-accept}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{serv\-\_\-accept}]{\setlength{\rightskip}{0pt plus 5cm}int serv\-\_\-accept (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{uid\-\_\-t $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a1bc5d27c203d4916d5e20b44a72f9238}
+\hypertarget{ourhdr_8h_a3c2436dad2811839a0c246827a10e9c0}{\index{ourhdr.\-h@{ourhdr.\-h}!serv\-\_\-listen@{serv\-\_\-listen}}
+\index{serv\-\_\-listen@{serv\-\_\-listen}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{serv\-\_\-listen}]{\setlength{\rightskip}{0pt plus 5cm}int serv\-\_\-listen (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a3c2436dad2811839a0c246827a10e9c0}
+\hypertarget{ourhdr_8h_ae02c4a2eb926f2d591b1f2a2eeedf086}{\index{ourhdr.\-h@{ourhdr.\-h}!set\-\_\-fl@{set\-\_\-fl}}
+\index{set\-\_\-fl@{set\-\_\-fl}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{set\-\_\-fl}]{\setlength{\rightskip}{0pt plus 5cm}void set\-\_\-fl (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_ae02c4a2eb926f2d591b1f2a2eeedf086}
+\hypertarget{ourhdr_8h_a28c31b8f5b83b3455fe32f6f10ea1182}{\index{ourhdr.\-h@{ourhdr.\-h}!signal\-\_\-intr@{signal\-\_\-intr}}
+\index{signal\-\_\-intr@{signal\-\_\-intr}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{signal\-\_\-intr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Sigfunc}$\ast$ signal\-\_\-intr (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{{\bf Sigfunc} $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a28c31b8f5b83b3455fe32f6f10ea1182}
+\hypertarget{ourhdr_8h_a349fefc7a9d3d631e780155d50ae504c}{\index{ourhdr.\-h@{ourhdr.\-h}!sleep\-\_\-us@{sleep\-\_\-us}}
+\index{sleep\-\_\-us@{sleep\-\_\-us}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{sleep\-\_\-us}]{\setlength{\rightskip}{0pt plus 5cm}void sleep\-\_\-us (
+\begin{DoxyParamCaption}
+\item[{unsigned}]{int}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a349fefc7a9d3d631e780155d50ae504c}
+\hypertarget{ourhdr_8h_af9236481829b4d6b8164c01ad950ab24}{\index{ourhdr.\-h@{ourhdr.\-h}!T\-E\-L\-L\-\_\-\-C\-H\-I\-L\-D@{T\-E\-L\-L\-\_\-\-C\-H\-I\-L\-D}}
+\index{T\-E\-L\-L\-\_\-\-C\-H\-I\-L\-D@{T\-E\-L\-L\-\_\-\-C\-H\-I\-L\-D}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{T\-E\-L\-L\-\_\-\-C\-H\-I\-L\-D}]{\setlength{\rightskip}{0pt plus 5cm}void T\-E\-L\-L\-\_\-\-C\-H\-I\-L\-D (
+\begin{DoxyParamCaption}
+\item[{pid\-\_\-t}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_af9236481829b4d6b8164c01ad950ab24}
+\hypertarget{ourhdr_8h_ace4abbaf38dfe2f24031afd4f539e2ea}{\index{ourhdr.\-h@{ourhdr.\-h}!T\-E\-L\-L\-\_\-\-P\-A\-R\-E\-N\-T@{T\-E\-L\-L\-\_\-\-P\-A\-R\-E\-N\-T}}
+\index{T\-E\-L\-L\-\_\-\-P\-A\-R\-E\-N\-T@{T\-E\-L\-L\-\_\-\-P\-A\-R\-E\-N\-T}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{T\-E\-L\-L\-\_\-\-P\-A\-R\-E\-N\-T}]{\setlength{\rightskip}{0pt plus 5cm}void T\-E\-L\-L\-\_\-\-P\-A\-R\-E\-N\-T (
+\begin{DoxyParamCaption}
+\item[{pid\-\_\-t}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_ace4abbaf38dfe2f24031afd4f539e2ea}
+\hypertarget{ourhdr_8h_a1d85cc5102129ac56c73a6d27a8dfc4c}{\index{ourhdr.\-h@{ourhdr.\-h}!T\-E\-L\-L\-\_\-\-W\-A\-I\-T@{T\-E\-L\-L\-\_\-\-W\-A\-I\-T}}
+\index{T\-E\-L\-L\-\_\-\-W\-A\-I\-T@{T\-E\-L\-L\-\_\-\-W\-A\-I\-T}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{T\-E\-L\-L\-\_\-\-W\-A\-I\-T}]{\setlength{\rightskip}{0pt plus 5cm}void T\-E\-L\-L\-\_\-\-W\-A\-I\-T (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a1d85cc5102129ac56c73a6d27a8dfc4c}
+\hypertarget{ourhdr_8h_addfdf23db859376edbb6f00856ec6452}{\index{ourhdr.\-h@{ourhdr.\-h}!tty\-\_\-atexit@{tty\-\_\-atexit}}
+\index{tty\-\_\-atexit@{tty\-\_\-atexit}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{tty\-\_\-atexit}]{\setlength{\rightskip}{0pt plus 5cm}void tty\-\_\-atexit (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_addfdf23db859376edbb6f00856ec6452}
+\hypertarget{ourhdr_8h_afb5a23acb1f08637c5826e41ed6efebe}{\index{ourhdr.\-h@{ourhdr.\-h}!tty\-\_\-cbreak@{tty\-\_\-cbreak}}
+\index{tty\-\_\-cbreak@{tty\-\_\-cbreak}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{tty\-\_\-cbreak}]{\setlength{\rightskip}{0pt plus 5cm}int tty\-\_\-cbreak (
+\begin{DoxyParamCaption}
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_afb5a23acb1f08637c5826e41ed6efebe}
+\hypertarget{ourhdr_8h_a2a76876c369dc05fde0ed7ada585df88}{\index{ourhdr.\-h@{ourhdr.\-h}!tty\-\_\-raw@{tty\-\_\-raw}}
+\index{tty\-\_\-raw@{tty\-\_\-raw}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{tty\-\_\-raw}]{\setlength{\rightskip}{0pt plus 5cm}int tty\-\_\-raw (
+\begin{DoxyParamCaption}
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a2a76876c369dc05fde0ed7ada585df88}
+\hypertarget{ourhdr_8h_a1409126bcab36166c89d433edad33b40}{\index{ourhdr.\-h@{ourhdr.\-h}!tty\-\_\-reset@{tty\-\_\-reset}}
+\index{tty\-\_\-reset@{tty\-\_\-reset}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{tty\-\_\-reset}]{\setlength{\rightskip}{0pt plus 5cm}int tty\-\_\-reset (
+\begin{DoxyParamCaption}
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a1409126bcab36166c89d433edad33b40}
+\hypertarget{ourhdr_8h_a53de5c3ab7733ac31c04381fb2e0934d}{\index{ourhdr.\-h@{ourhdr.\-h}!W\-A\-I\-T\-\_\-\-C\-H\-I\-L\-D@{W\-A\-I\-T\-\_\-\-C\-H\-I\-L\-D}}
+\index{W\-A\-I\-T\-\_\-\-C\-H\-I\-L\-D@{W\-A\-I\-T\-\_\-\-C\-H\-I\-L\-D}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{W\-A\-I\-T\-\_\-\-C\-H\-I\-L\-D}]{\setlength{\rightskip}{0pt plus 5cm}void W\-A\-I\-T\-\_\-\-C\-H\-I\-L\-D (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a53de5c3ab7733ac31c04381fb2e0934d}
+\hypertarget{ourhdr_8h_ab6174ba4691d62cfd5646da95876e61f}{\index{ourhdr.\-h@{ourhdr.\-h}!W\-A\-I\-T\-\_\-\-P\-A\-R\-E\-N\-T@{W\-A\-I\-T\-\_\-\-P\-A\-R\-E\-N\-T}}
+\index{W\-A\-I\-T\-\_\-\-P\-A\-R\-E\-N\-T@{W\-A\-I\-T\-\_\-\-P\-A\-R\-E\-N\-T}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{W\-A\-I\-T\-\_\-\-P\-A\-R\-E\-N\-T}]{\setlength{\rightskip}{0pt plus 5cm}void W\-A\-I\-T\-\_\-\-P\-A\-R\-E\-N\-T (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_ab6174ba4691d62cfd5646da95876e61f}
+\hypertarget{ourhdr_8h_a86d677d292a2fb0674851f1b4d11a36f}{\index{ourhdr.\-h@{ourhdr.\-h}!writen@{writen}}
+\index{writen@{writen}!ourhdr.h@{ourhdr.\-h}}
+\subsubsection[{writen}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t writen (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{const void $\ast$}]{, }
+\item[{size\-\_\-t}]{}
+\end{DoxyParamCaption}
+)}}\label{ourhdr_8h_a86d677d292a2fb0674851f1b4d11a36f}

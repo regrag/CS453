@@ -1,0 +1,14 @@
+
+First run the make command to compile the program (only if you did not run make in the root).
+
+Usage: TestList <list size> [<test size=list size>] [<seed>]
+
+The list data structure will accept any time of objects as data for the nodes. The requirements are:
+1. The objects must have a key generation method.
+2. The objects must have a toString method.
+3. The objects must have a free memory method.
+
+All three of these functions are passed into the list as pointers upon its creation. There is a fourth
+require method that allows deeper comparison of objects. It is also required to be passed to the
+constructor of the list.
+

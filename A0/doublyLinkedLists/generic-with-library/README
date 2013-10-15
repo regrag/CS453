@@ -1,0 +1,9 @@
+
+This folder contains two sub directories.
+
+The first, generic, contains files for a generic doubly linked list which can be compiled and then the
+test can be run. The second, generic with library, contains files for a generic doubly linked list 
+that can be compiled into a library.
+
+Usage: make
+Then cd into the directory you want. See inner README for usage of each.

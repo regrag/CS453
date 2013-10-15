@@ -1,0 +1,53 @@
+\hypertarget{structlist}{\section{list Struct Reference}
+\label{structlist}\index{list@{list}}
+}
+
+
+{\ttfamily \#include $<$List.\-h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{structlist_a3b03adad0c0429bae9493667ff366dc2}{size}
+\item 
+\hyperlink{Node_8h_aa6eec21621b8638e350fd0ec238a9715}{Node\-Ptr} \hyperlink{structlist_a357a56cbe66297fb5cc5cd8ba9fa6cf4}{head}
+\item 
+\hyperlink{Node_8h_aa6eec21621b8638e350fd0ec238a9715}{Node\-Ptr} \hyperlink{structlist_a7fba27040dab68e2d6acc2885b6df167}{tail}
+\item 
+unsigned long int($\ast$ \hyperlink{structlist_aad1e0770d1ddef8a65978111af74695f}{get\-Key} )(void $\ast$)
+\item 
+char $\ast$($\ast$ \hyperlink{structlist_a038a0134bf8f106363ecdf14e1f38f01}{to\-String} )(void $\ast$)
+\item 
+void($\ast$ \hyperlink{structlist_a9a876b6c3e9c2988dc070511de6dd9b4}{free\-Object} )(void $\ast$)
+\item 
+int($\ast$ \hyperlink{structlist_aa60033b85f5e60fdf6a9c32e485a655b}{compare\-Function} )(void $\ast$, void $\ast$)
+\end{DoxyCompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{structlist_aa60033b85f5e60fdf6a9c32e485a655b}{\index{list@{list}!compare\-Function@{compare\-Function}}
+\index{compare\-Function@{compare\-Function}!list@{list}}
+\subsubsection[{compare\-Function}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ list\-::compare\-Function)(void $\ast$, void $\ast$)}}\label{structlist_aa60033b85f5e60fdf6a9c32e485a655b}
+\hypertarget{structlist_a9a876b6c3e9c2988dc070511de6dd9b4}{\index{list@{list}!free\-Object@{free\-Object}}
+\index{free\-Object@{free\-Object}!list@{list}}
+\subsubsection[{free\-Object}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ list\-::free\-Object)(void $\ast$)}}\label{structlist_a9a876b6c3e9c2988dc070511de6dd9b4}
+\hypertarget{structlist_aad1e0770d1ddef8a65978111af74695f}{\index{list@{list}!get\-Key@{get\-Key}}
+\index{get\-Key@{get\-Key}!list@{list}}
+\subsubsection[{get\-Key}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long int($\ast$ list\-::get\-Key)(void $\ast$)}}\label{structlist_aad1e0770d1ddef8a65978111af74695f}
+\hypertarget{structlist_a357a56cbe66297fb5cc5cd8ba9fa6cf4}{\index{list@{list}!head@{head}}
+\index{head@{head}!list@{list}}
+\subsubsection[{head}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Node\-Ptr} list\-::head}}\label{structlist_a357a56cbe66297fb5cc5cd8ba9fa6cf4}
+\hypertarget{structlist_a3b03adad0c0429bae9493667ff366dc2}{\index{list@{list}!size@{size}}
+\index{size@{size}!list@{list}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}int list\-::size}}\label{structlist_a3b03adad0c0429bae9493667ff366dc2}
+\hypertarget{structlist_a7fba27040dab68e2d6acc2885b6df167}{\index{list@{list}!tail@{tail}}
+\index{tail@{tail}!list@{list}}
+\subsubsection[{tail}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Node\-Ptr} list\-::tail}}\label{structlist_a7fba27040dab68e2d6acc2885b6df167}
+\hypertarget{structlist_a038a0134bf8f106363ecdf14e1f38f01}{\index{list@{list}!to\-String@{to\-String}}
+\index{to\-String@{to\-String}!list@{list}}
+\subsubsection[{to\-String}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$($\ast$ list\-::to\-String)(void $\ast$)}}\label{structlist_a038a0134bf8f106363ecdf14e1f38f01}
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{List_8h}{List.\-h}\end{DoxyCompactItemize}

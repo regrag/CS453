@@ -1,0 +1,6 @@
+\section{Data Structures}
+Here are the data structures with brief descriptions\-:\begin{DoxyCompactList}
+\item\contentsline{section}{\hyperlink{structjob}{job} }{\pageref{structjob}}{}
+\item\contentsline{section}{\hyperlink{structlist}{list} }{\pageref{structlist}}{}
+\item\contentsline{section}{\hyperlink{structnode}{node} }{\pageref{structnode}}{}
+\end{DoxyCompactList}

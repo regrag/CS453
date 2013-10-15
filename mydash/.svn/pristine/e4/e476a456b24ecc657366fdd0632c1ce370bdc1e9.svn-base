@@ -1,0 +1,31 @@
+\hypertarget{common_8h}{\section{common.\-h File Reference}
+\label{common_8h}\index{common.\-h@{common.\-h}}
+}
+{\ttfamily \#include $<$string.\-h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{common_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{T\-R\-U\-E}~1
+\item 
+\#define \hyperlink{common_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\-A\-L\-S\-E}~0
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef int \hyperlink{common_8h_a127a96e09108f503cca20256eaa4ddff}{Boolean}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{common_8h_aa93f0eb578d23995850d61f7d61c55c1}{\index{common.\-h@{common.\-h}!F\-A\-L\-S\-E@{F\-A\-L\-S\-E}}
+\index{F\-A\-L\-S\-E@{F\-A\-L\-S\-E}!common.h@{common.\-h}}
+\subsubsection[{F\-A\-L\-S\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\-A\-L\-S\-E~0}}\label{common_8h_aa93f0eb578d23995850d61f7d61c55c1}
+\hypertarget{common_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{\index{common.\-h@{common.\-h}!T\-R\-U\-E@{T\-R\-U\-E}}
+\index{T\-R\-U\-E@{T\-R\-U\-E}!common.h@{common.\-h}}
+\subsubsection[{T\-R\-U\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\-R\-U\-E~1}}\label{common_8h_aa8cecfc5c5c054d2875c03e77b7be15d}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{common_8h_a127a96e09108f503cca20256eaa4ddff}{\index{common.\-h@{common.\-h}!Boolean@{Boolean}}
+\index{Boolean@{Boolean}!common.h@{common.\-h}}
+\subsubsection[{Boolean}]{\setlength{\rightskip}{0pt plus 5cm}typedef int {\bf Boolean}}}\label{common_8h_a127a96e09108f503cca20256eaa4ddff}

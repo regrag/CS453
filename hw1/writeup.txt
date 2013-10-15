@@ -1,0 +1,7 @@
+﻿Homework 1 Write up
+
+Part 1: This part of the project went very smoothly for me with no errors. My kernel compiled in 30 minutes and I was able to generate 62591 processes while under root and only 900 as regular old me. Max user processes is set to 31432 when using ulimit -Ha and the value in /proc/sys/kernel/threads-max is 62864. Thus I am getting the expected 50%.
+
+Part 2: This project also went smoothly for me (I am rather lucky on this homework). When I changed the max_threads in fork.c to 95% and run ulimit again I now get 59745 which looks to be correct.
+
+Comments: Interestingly enough, the fork-test.c did not seem to work very well in my case. During part1 I was easily able to surpass the limit of 50% while a root user and in part2 I got up to 64999 (i maxed out in the fork-test). I changed the value of the sleep function up to 100 instead of the original 10. This allowed me to get to about 29k and then slowed the creation of threads immensely. It looked to me as though when one thread finally died after sleeping for 100 seconds, another was generated.

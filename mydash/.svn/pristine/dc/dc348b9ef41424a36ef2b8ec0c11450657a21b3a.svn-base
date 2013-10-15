@@ -1,0 +1,10 @@
+Author: Chad Weigle
+Date: 10/4/13
+Programming Assignment 1
+
+Usage: ./run.sh
+
+mydash is a shell program written in C that uses a doubly linked list structure to keep track of jobs. The program runs most normal commands that a bash shell has like ls, cd, ps, etc. Also, there is a custom command, jobs, that will print all of the jobs that have been running in the background that have now been completed.
+
+The design for this program was to write up the entire program in a single file and then break it up. Normally this design is poor to use, but I did not see the design section of the requirements until I was already partly through the project. When the shell was mostly completed, I then found sections that had common functionality and I broke those into functions and put them in a separate file.
+

@@ -1,0 +1,84 @@
+\hypertarget{error_8c}{\section{error.\-c File Reference}
+\label{error_8c}\index{error.\-c@{error.\-c}}
+}
+{\ttfamily \#include $<$errno.\-h$>$}\\*
+{\ttfamily \#include $<$stdarg.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}ourhdr.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{error_8c_a7501d51ef09457b80e1ce287b7a77f7a}{err\-\_\-doit} (int, const char $\ast$, va\-\_\-list)
+\item 
+void \hyperlink{error_8c_ad8dc374106d9b471e5cb5792fa83405d}{err\-\_\-ret} (const char $\ast$fmt,...)
+\item 
+void \hyperlink{error_8c_a9ce870c838105ddf743f2121bce607f3}{err\-\_\-sys} (const char $\ast$fmt,...)
+\item 
+void \hyperlink{error_8c_a94409fb713a33ca0c8a5ae736fa114cb}{err\-\_\-dump} (const char $\ast$fmt,...)
+\item 
+void \hyperlink{error_8c_a6fd43e7ea7790d93e1c5aa92ceae9ae8}{err\-\_\-msg} (const char $\ast$fmt,...)
+\item 
+void \hyperlink{error_8c_a0f0a7089b5c5d1f15872265c3de2a4f1}{err\-\_\-quit} (const char $\ast$fmt,...)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{error_8c_a277430f8b1d8fbc4f488b55e2d0efd77}{pname} = N\-U\-L\-L
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{error_8c_a7501d51ef09457b80e1ce287b7a77f7a}{\index{error.\-c@{error.\-c}!err\-\_\-doit@{err\-\_\-doit}}
+\index{err\-\_\-doit@{err\-\_\-doit}!error.c@{error.\-c}}
+\subsubsection[{err\-\_\-doit}]{\setlength{\rightskip}{0pt plus 5cm}static void err\-\_\-doit (
+\begin{DoxyParamCaption}
+\item[{int}]{errnoflag, }
+\item[{const char $\ast$}]{fmt, }
+\item[{va\-\_\-list}]{ap}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{error_8c_a7501d51ef09457b80e1ce287b7a77f7a}
+\hypertarget{error_8c_a94409fb713a33ca0c8a5ae736fa114cb}{\index{error.\-c@{error.\-c}!err\-\_\-dump@{err\-\_\-dump}}
+\index{err\-\_\-dump@{err\-\_\-dump}!error.c@{error.\-c}}
+\subsubsection[{err\-\_\-dump}]{\setlength{\rightskip}{0pt plus 5cm}void err\-\_\-dump (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{error_8c_a94409fb713a33ca0c8a5ae736fa114cb}
+\hypertarget{error_8c_a6fd43e7ea7790d93e1c5aa92ceae9ae8}{\index{error.\-c@{error.\-c}!err\-\_\-msg@{err\-\_\-msg}}
+\index{err\-\_\-msg@{err\-\_\-msg}!error.c@{error.\-c}}
+\subsubsection[{err\-\_\-msg}]{\setlength{\rightskip}{0pt plus 5cm}void err\-\_\-msg (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{error_8c_a6fd43e7ea7790d93e1c5aa92ceae9ae8}
+\hypertarget{error_8c_a0f0a7089b5c5d1f15872265c3de2a4f1}{\index{error.\-c@{error.\-c}!err\-\_\-quit@{err\-\_\-quit}}
+\index{err\-\_\-quit@{err\-\_\-quit}!error.c@{error.\-c}}
+\subsubsection[{err\-\_\-quit}]{\setlength{\rightskip}{0pt plus 5cm}void err\-\_\-quit (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{error_8c_a0f0a7089b5c5d1f15872265c3de2a4f1}
+\hypertarget{error_8c_ad8dc374106d9b471e5cb5792fa83405d}{\index{error.\-c@{error.\-c}!err\-\_\-ret@{err\-\_\-ret}}
+\index{err\-\_\-ret@{err\-\_\-ret}!error.c@{error.\-c}}
+\subsubsection[{err\-\_\-ret}]{\setlength{\rightskip}{0pt plus 5cm}void err\-\_\-ret (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{error_8c_ad8dc374106d9b471e5cb5792fa83405d}
+\hypertarget{error_8c_a9ce870c838105ddf743f2121bce607f3}{\index{error.\-c@{error.\-c}!err\-\_\-sys@{err\-\_\-sys}}
+\index{err\-\_\-sys@{err\-\_\-sys}!error.c@{error.\-c}}
+\subsubsection[{err\-\_\-sys}]{\setlength{\rightskip}{0pt plus 5cm}void err\-\_\-sys (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{error_8c_a9ce870c838105ddf743f2121bce607f3}
+
+
+\subsection{Variable Documentation}
+\hypertarget{error_8c_a277430f8b1d8fbc4f488b55e2d0efd77}{\index{error.\-c@{error.\-c}!pname@{pname}}
+\index{pname@{pname}!error.c@{error.\-c}}
+\subsubsection[{pname}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ pname = N\-U\-L\-L}}\label{error_8c_a277430f8b1d8fbc4f488b55e2d0efd77}

@@ -1,0 +1,29 @@
+\hypertarget{Node_8c}{\section{Node.\-c File Reference}
+\label{Node_8c}\index{Node.\-c@{Node.\-c}}
+}
+{\ttfamily \#include \char`\"{}Node.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{Node_8h_aa6eec21621b8638e350fd0ec238a9715}{Node\-Ptr} \hyperlink{Node_8c_a133f1fa72f162ae506de8bbc74bb5c22}{create\-Node} (void $\ast$obj)
+\item 
+void \hyperlink{Node_8c_ac342517b4573611d6a7e7aec22bf1c0d}{free\-Node} (\hyperlink{Node_8h_aa6eec21621b8638e350fd0ec238a9715}{Node\-Ptr} \hyperlink{structnode}{node}, void($\ast$free\-Object)(void $\ast$))
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{Node_8c_a133f1fa72f162ae506de8bbc74bb5c22}{\index{Node.\-c@{Node.\-c}!create\-Node@{create\-Node}}
+\index{create\-Node@{create\-Node}!Node.c@{Node.\-c}}
+\subsubsection[{create\-Node}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Node\-Ptr} create\-Node (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{obj}
+\end{DoxyParamCaption}
+)}}\label{Node_8c_a133f1fa72f162ae506de8bbc74bb5c22}
+\hypertarget{Node_8c_ac342517b4573611d6a7e7aec22bf1c0d}{\index{Node.\-c@{Node.\-c}!free\-Node@{free\-Node}}
+\index{free\-Node@{free\-Node}!Node.c@{Node.\-c}}
+\subsubsection[{free\-Node}]{\setlength{\rightskip}{0pt plus 5cm}void free\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf Node\-Ptr}}]{node, }
+\item[{void($\ast$)(void $\ast$)}]{free\-Object}
+\end{DoxyParamCaption}
+)}}\label{Node_8c_ac342517b4573611d6a7e7aec22bf1c0d}
