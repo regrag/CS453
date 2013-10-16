@@ -75,16 +75,18 @@ pthread_t *tids;
 static int parse_line(char *line, const char *delim, char *field[])
 {
 	char *next;
+	char **saveptr = (char **)malloc(sizeof(line));
 	int cnt=0;
 	
-	next = strtok(line, delim);
+	next = strtok_r(line, delim, saveptr);
 	while (next) {
 		if (cnt == MAX_NUM_FIELDS-1) break;
 		field[cnt] = (char *) malloc(strlen(next)+1);
 		strcpy(field[cnt++],next);
-		next =strtok(NULL, delim);
+		next =strtok_r(NULL, delim, saveptr);
 	}
 	field[cnt] = (char *) 0; /* make the field array be null-terminated */
+	free(saveptr);
 
 	return cnt;
 }
@@ -130,7 +132,7 @@ static void initialize_webstats()
 	webstats.local_gets = 0;
 	webstats.failed_gets = 0;
 	webstats.local_failed_gets = 0;
-	pthread_mutex_init(&(webstats->mutex), NULL);
+	pthread_mutex_init(&(webstats.mutex), NULL);
 }
 
 
@@ -148,6 +150,7 @@ static void initialize_webstats()
 #define HTTP_STATUS_CODE_FIELD 8
 static void update_webstats(int num, char **field)
 {
+	pthread_mutex_lock(&(webstats.mutex));
 	int bytes_downloaded = atoi(field[BYTES_DOWNLOADED_FIELD]);
 
 	webstats.total_gets++;
@@ -161,6 +164,7 @@ static void update_webstats(int num, char **field)
 		if (atoi(field[HTTP_STATUS_CODE_FIELD]) == 404)
 			webstats.local_failed_gets++;
 	}
+	pthread_mutex_unlock(&(webstats.mutex));
 }
 
 
@@ -198,9 +202,8 @@ static void print_webstats()
  *	return
  *		none
  */
-void process_file(void *ptr)
+void *process_file(void *ptr)
 {
-	char *args;
 	char *filename = (char *) ptr;
 	char *linebuffer = (char *) malloc(sizeof(char) * MAX_LINE_SIZE);
 	char **field = (char **) malloc(sizeof(char *) * MAX_NUM_FIELDS);
@@ -223,8 +226,11 @@ void process_file(void *ptr)
 
 		while (fgets(linebuffer, MAX_LINE_SIZE, fin) != NULL)
 		{
-
-			pthread_create(&tids[i], NULL, process_file, (void *) NULL);
+			int num = parse_line(linebuffer, " []\"", field);
+			strcpy(end_date, field[3]);
+			update_webstats(num, field);
+			free_tokens(num, field);
+			strcpy(linebuffer,"");
 		}
 		printf("Ending date: %s\n", end_date);
 		free(end_date);
@@ -232,25 +238,14 @@ void process_file(void *ptr)
 		free(field);
 		fclose(fin);
 	}
+	pthread_exit(0);
+	return NULL;
 }
-
-void process_line() {
-	pthread_mutex_lock(&(webstats->mutex));
-
-	int num = parse_line(linebuffer, " []\"", field);
-	strcpy(end_date, field[3]);
-	update_webstats(num, field);
-	free_tokens(num, field);
-	strcpy(linebuffer,"");
-
-	pthread_mutex_unlock(&(webstats->mutex));
-	return;
-}
-
 
 int main(int argc, char **argv)
 {
 	int i;
+	int j;
 
 	if (argc <  2) {
 		fprintf(stderr,"Usage: %s <access_log_file> {<access_log_file>} \n",argv[0]);
@@ -261,16 +256,18 @@ int main(int argc, char **argv)
 	strcpy(program_name, argv[0]);
 
 	initialize_webstats();
-	tids = (pthread_t *) malloc(sizeof(pthread_t)*(atoi(MAX_THREADS))));
-
+	tids = (pthread_t *) malloc(sizeof(pthread_t)*MAX_THREADS);
 	for (i=1; i<argc; i++)
 	{
 		/*process the ith file*/
-		process_file(argv[i]);
+		pthread_create(&tids[i-1], NULL, process_file, (void *) argv[i]);
 	}
-
+	for(j=0; j < (argc-1);j++) {
+		pthread_join(tids[j], NULL);
+	}
 	print_webstats();
 	free(program_name);
+	free(tids);
 	exit(0);
 
 }
