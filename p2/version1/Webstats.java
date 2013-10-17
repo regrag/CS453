@@ -13,7 +13,8 @@ public class Webstats
 {
 	private final int MAX_LINE_SIZE = 4096;
 	private final int MAX_NUM_FIELDS = 40;
-	
+	private static final int MAX_THREADS = 32;
+        
 	private double local_bytes;
 	private double total_bytes;
 	private double local_gets;
@@ -85,7 +86,7 @@ public class Webstats
 	  @param field An array of num Strings representing the log entry
 	  @return none
 	*/
-	private void update_webstats(int num, String field[])
+	private synchronized void update_webstats(int num, String field[])
 	{
 		int bytes_downloaded = 0;
 		try {
@@ -163,22 +164,25 @@ public class Webstats
 			System.exit(1);
 		}
 	}
-
-
+        
 	public static void main(String argv[])
 	{
 		if (argv.length < 1)
 		{
-			System.err.println("Usage: java Webstats <access_log_file> {<access_log_file>}");
-			System.exit(1);
+                    System.err.println("Usage: java Webstats <access_log_file> {<access_log_file>}");
+                    System.exit(1);
 		}
 		
 		Webstats ws = new Webstats("Webstats.java");
+                Thread[] wsThreads = new Thread[MAX_THREADS];
 		
 		for (int i = 0; i < argv.length; i++)
 		{
-			/*process the ith file*/
-			ws.process_file(argv[i]);
+                    /*process the ith file*/
+                    //ws.process_file(argv[i]);
+                    System.out.println(argv[i]);
+                    wsThreads[i] = new Thread(new WebStatsThread(ws, argv[i]));
+                    wsThreads[i].start();
 		}
 		
 		ws.print_webstats();
