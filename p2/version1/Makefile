@@ -24,7 +24,7 @@ all: $(PROGS)
 webstats: webstats.o error.o
 	$(CC) $(CFLAGS) $(LIBS) -o $@ webstats.o error.o
 
-Webstats: Webstats.class
+Webstats: Webstats.class WebStatsThread.class
 
 clean:
-	/bin/rm -f *.o $(PROGS) Webstats.class
+	/bin/rm -f *.o $(PROGS) Webstats.class WebStatsThread.class

@@ -180,9 +180,15 @@ public class Webstats
 		{
                     /*process the ith file*/
                     //ws.process_file(argv[i]);
-                    System.out.println(argv[i]);
                     wsThreads[i] = new Thread(new WebStatsThread(ws, argv[i]));
                     wsThreads[i].start();
+		}
+		for(int i = 0; i < argv.length; i++) {
+			try {
+				wsThreads[i].join();
+			} catch (InterruptedException e) {
+				System.out.println(e);
+			}
 		}
 		
 		ws.print_webstats();
