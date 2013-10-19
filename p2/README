@@ -8,6 +8,30 @@ cd into the version 1 dir and run make. This will compile the c and java version
 
 Usage: webstats <[file names]>
 
+----
+Time
+----
+Linux:
+	Single Threaded on access_log00-07:
+		real 0m14.637s
+		user 0m13.380s
+		sys 0m0.341s
+	Multithreaded:
+		real 0m12.618s
+		user 0m18.083s
+		sys 0m5.963s
+
+Java:
+	Single Threaded on access_log00-07:
+		real 0m10.753s
+		user 0m10.701s
+		sys 0m0.430s
+	Multithreaded:
+		real 0m6.760s
+		user 0m11.346s
+		sys 0m0.697s
+
+The times inproved for the multithreaded versions as expected. I image the reason for the large times is the fact that I do alot of locking and unlocking and did not optimize the program. Also, I ran this on a 3 year old computer with a dual core processor. It would run faster on newer computers that contain 4+ cores.
 
 --------
 Comments
