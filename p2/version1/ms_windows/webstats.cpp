@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
+#include <Windows.h>
 
 /*
 	Generate some web statistics  based on access logs from the Apache web server. 
@@ -39,6 +40,7 @@
 
 #define MAX_LINE_SIZE 4096
 #define MAX_NUM_FIELDS 40
+#define MAX_THREADS 32
 
 
 struct stats {
@@ -50,6 +52,7 @@ struct stats {
 	double local_failed_gets;
 	char **url;
 	int *requests;
+	HANDLE mutex;
 } webstats;
 
 char *program_name;
@@ -79,7 +82,7 @@ static int parse_line(char *line, const char *delim, char *field[])
 	while (next) {
 		if (cnt == MAX_NUM_FIELDS-1) break;
 		field[cnt] = (char *) malloc(strlen(next)+1);
-		strcpy_s(field[cnt++],strlen(next),next);
+		strcpy_s(field[cnt++],(strlen(next)+1),next);
 		next = strtok_s(NULL, delim, saveptr);
 	}
 	field[cnt] = (char *) 0; /* make the field array be null-terminated */
@@ -128,6 +131,10 @@ static void initialize_webstats()
 	webstats.local_gets = 0;
 	webstats.failed_gets = 0;
 	webstats.local_failed_gets = 0;
+	webstats.mutex = CreateMutex( 
+        NULL,              // default security attributes
+        FALSE,             // initially not owned
+        NULL);             // unnamed mutex
 }
 
 
@@ -145,18 +152,25 @@ static void initialize_webstats()
 #define HTTP_STATUS_CODE_FIELD 8
 static void update_webstats(int num, char **field)
 {
-	int bytes_downloaded = atoi(field[BYTES_DOWNLOADED_FIELD]);
+	DWORD waitResult;
+	waitResult = WaitForSingleObject( 
+            webstats.mutex,    // handle to mutex
+            INFINITE);		   // no time-out interval
+	if(waitResult == WAIT_OBJECT_0) {
+		int bytes_downloaded = atoi(field[BYTES_DOWNLOADED_FIELD]);
 
-	webstats.total_gets++;
-	webstats.total_bytes += bytes_downloaded;
-	if (atoi(field[HTTP_STATUS_CODE_FIELD]) == 404) webstats.failed_gets++;
+		webstats.total_gets++;
+		webstats.total_bytes += bytes_downloaded;
+		if (atoi(field[HTTP_STATUS_CODE_FIELD]) == 404) webstats.failed_gets++;
 
-	if ((strstr(field[0], "boisestate.edu") != NULL) || (strstr(field[0], "132.178") != NULL))
-	{
-		webstats.local_gets++;
-		webstats.local_bytes += bytes_downloaded;
-		if (atoi(field[HTTP_STATUS_CODE_FIELD]) == 404)
-			webstats.local_failed_gets++;
+		if ((strstr(field[0], "boisestate.edu") != NULL) || (strstr(field[0], "132.178") != NULL))
+		{
+			webstats.local_gets++;
+			webstats.local_bytes += bytes_downloaded;
+			if (atoi(field[HTTP_STATUS_CODE_FIELD]) == 404)
+				webstats.local_failed_gets++;
+		}
+		ReleaseMutex(webstats.mutex);
 	}
 }
 
@@ -198,13 +212,14 @@ static void print_webstats()
 void process_file(void *ptr)
 {
 	FILE *fin;
+	errno_t err = 0;
 	char *filename = (char *) ptr;
 	char *linebuffer = (char *) malloc(sizeof(char) * MAX_LINE_SIZE);
 	char **field = (char **) malloc(sizeof(char *) * MAX_NUM_FIELDS);
 	char *end_date = (char *) malloc(sizeof(char) * MAX_LINE_SIZE);
 
 	fprintf(stderr,"%s: processing log file %s\n", program_name, filename);
-	errno_t err = fopen_s(&fin, filename,"r");
+	err = fopen_s(&fin, filename,"r");
 	if (fin == NULL)
 	{
 		fprintf(stderr,"Cannot open file %s\n", filename);
@@ -221,7 +236,7 @@ void process_file(void *ptr)
 		while (fgets(linebuffer, MAX_LINE_SIZE, fin) != NULL)
 		{
 			int num = parse_line(linebuffer, " []\"", field);
-			strcpy_s(end_date, strlen(field[3]), field[3]);
+			strcpy_s(end_date, MAX_LINE_SIZE, field[3]);
 			update_webstats(num, field);
 			free_tokens(num, field);
 			strcpy_s(linebuffer, 1,"");
@@ -231,11 +246,11 @@ void process_file(void *ptr)
 	}
 }
 
-
-
-
 int main(int argc, char **argv)
 {
+	HANDLE threads[MAX_THREADS];
+	int threadCount = 0;
+	DWORD ThreadID;
 	int i;
 
 	if (argc <  2) {
@@ -243,18 +258,33 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 
-	program_name = (char *) malloc(strlen(argv[0])+1);
-	strcpy_s(program_name, strlen(argv[0]), argv[0]);
+	char *program_name = (char *) malloc(strlen(argv[0])+1);
+	strcpy_s(program_name, (size_t)(strlen(argv[0]) + 1), argv[0]);
 
 	initialize_webstats();
 
 	for (i=1; i<argc; i++)
 	{
 		/*process the ith file*/
-		process_file(argv[i]);
+		//process_file(argv[i]);
+		threadCount++;
+		printf("%s\n",argv[i]);
+		threads[i-1] = CreateThread( 
+                     NULL,       // default security attributes
+                     0,          // default stack size
+                     (LPTHREAD_START_ROUTINE) process_file, 
+                     argv[i],       // thread function arguments
+                     0,          // default creation flags
+                     &ThreadID); // receive thread identifier
 	}
 
+	WaitForMultipleObjects(threadCount, threads, TRUE, INFINITE);
+	for( i=0; i < threadCount; i++ )
+        CloseHandle(threads[i]);
+
+    CloseHandle(webstats.mutex);
 	print_webstats();
+	Sleep(10000);	//to see the output
 	exit(0);
 
 }
