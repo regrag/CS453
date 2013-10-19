@@ -4,7 +4,7 @@ Date: 10/18/13
 --------------
 Make and Usage
 --------------
-cd into the version 1 dir and run make. This will compile the c and java version of webstats. In the ms_windows folder, the cpp file is located. This will need to be put into a visual studio project and then run.
+cd into the version 1 dir and run make. This will compile the c and java version of webstats. In the ms_windows folder, the cpp file is located. This will need to be put into a visual studio project and then run. Also, inside the ms_windows dir is my vs2012 proj folder. You should be able to load this into vs and run it. Just make sure to change the args to point to the data files.
 
 Usage: webstats <[file names]>
 
