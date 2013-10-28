@@ -1,0 +1,39 @@
+Author: Chad Weigle
+Date: 10/18/13
+
+--------------
+Make and Usage
+--------------
+cd into the version 1 dir and run make. This will compile the c and java version of webstats. In the ms_windows folder, the cpp file is located. This will need to be put into a visual studio project and then run. Also, inside the ms_windows dir is my vs2012 proj folder. You should be able to load this into vs and run it. Just make sure to change the args to point to the data files.
+
+Usage: webstats <[file names]>
+
+----
+Time
+----
+Linux:
+	Single Threaded on access_log00-07:
+		real 0m14.637s
+		user 0m13.380s
+		sys 0m0.341s
+	Multithreaded:
+		real 0m12.618s
+		user 0m18.083s
+		sys 0m5.963s
+
+Java:
+	Single Threaded on access_log00-07:
+		real 0m10.753s
+		user 0m10.701s
+		sys 0m0.430s
+	Multithreaded:
+		real 0m6.760s
+		user 0m11.346s
+		sys 0m0.697s
+
+The times inproved for the multithreaded versions as expected. I image the reason for the large times is the fact that I do alot of locking and unlocking and did not optimize the program. Also, I ran this on a 3 year old computer with a dual core processor. It would run faster on newer computers that contain 4+ cores.
+
+--------
+Comments
+--------
+The hardest part of this project for me was getting the vs file to accept in the arguments that pointed to the data sources. I ended up wrapping the paths in "" and it finally worked (spaces in dir names suck!). Other than that, I felt like the project was manageable and doable in the amount of time given.
