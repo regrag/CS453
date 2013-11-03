@@ -8,7 +8,7 @@ do
 		do
 			for c in 1 2 3 4 5
 			do
-				pc 10 $items $p $c $sleeptime > /dev/null
+				./pc 10 $items $p $c $sleeptime > /dev/null
 			done
 		done
 	done

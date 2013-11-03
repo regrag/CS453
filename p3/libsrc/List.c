@@ -33,7 +33,7 @@ ListPtr createList(unsigned long int (*getKey)(void *),
 	list->freeObject = freeObject;
 	pthread_cond_init(&(list->bufferNotEmpty), NULL);
 	pthread_cond_init(&(list->bufferNotFull), NULL);
-	pthread__mutex_init(&(list->mutex), NULL);
+	pthread_mutex_init(&(list->mutex), NULL);
     pthread_cond_broadcast(&(list->bufferNotEmpty));
     pthread_cond_broadcast(&(list->bufferNotFull));
 	return list;
@@ -45,9 +45,9 @@ ListPtr createList(unsigned long int (*getKey)(void *),
 * This function will free the memory allocated for the list.
 */
 void freeList(ListPtr list) {
-	pthread__mutex_lock(&(list->mutex));
+	pthread_mutex_lock(&(list->mutex));
 	_freeList(list);
-	pthread__mutex_unlock(&(list->mutex));
+	pthread_mutex_unlock(&(list->mutex));
 }
 
 void _freeList(ListPtr list)
@@ -75,10 +75,10 @@ int getMaxSize(ListPtr list) {
 }
 
 void finishUp(ListPtr list) {
-	pthread__mutex_lock(&(list->mutex));
+	pthread_mutex_lock(&(list->mutex));
 	pthread_cond_broadcast(&(list->bufferNotEmpty));
 	pthread_cond_broadcast(&(list->bufferNotFull));
-	pthread__mutex_unlock(&(list->mutex));
+	pthread_mutex_unlock(&(list->mutex));
 }
 
 /*
@@ -101,13 +101,13 @@ Boolean isEmpty(ListPtr list)
 * all pointers.
 */
 void addAtFront(ListPtr list, NodePtr node) {
-	pthread__mutex_lock(&(list->mutex));
+	pthread_mutex_lock(&(list->mutex));
 	while(getSize(list) == getMaxSize(list)) {
 		//list is full
 		pthread_cond_wait(&(list->bufferNotFull), &(list->mutex));
 	}
 	_addAtFront(list, node);
-	pthread__mutex_unlock(&(list->mutex));
+	pthread_mutex_unlock(&(list->mutex));
 	pthread_cond_broadcast(&(list->bufferNotEmpty));
 }
 
@@ -135,13 +135,13 @@ void _addAtFront(ListPtr list, NodePtr node)
 * all pointers.
 */
 void addAtRear(ListPtr list, NodePtr node) {
-	pthread__mutex_lock(&(list->mutex));
+	pthread_mutex_lock(&(list->mutex));
 	while(getSize(list) == getMaxSize(list)) {
 		//list is full
 		pthread_cond_wait(&(list->bufferNotFull), &(list->mutex));
 	}
 	_addAtRear(list, node);
-	pthread__mutex_unlock(&(list->mutex));
+	pthread_mutex_unlock(&(list->mutex));
 	pthread_cond_broadcast(&(list->bufferNotEmpty));
 }
 
@@ -169,13 +169,13 @@ void _addAtRear(ListPtr list, NodePtr node)
 */
 NodePtr removeFront(ListPtr list) {
 	NodePtr nodePtr;
-	pthread__mutex_lock(&(list->mutex));
+	pthread_mutex_lock(&(list->mutex));
 	while(getSize(list) == 0) {
 		//list is empty
 		pthread_cond_wait(&(list->bufferNotEmpty), &(list->mutex));
 	}
 	nodePtr = _removeFront(list);
-	pthread__mutex_unlock(&(list->mutex));
+	pthread_mutex_unlock(&(list->mutex));
 	pthread_cond_broadcast(&(list->bufferNotFull));
 	return nodePtr;
 }
@@ -208,13 +208,13 @@ NodePtr _removeFront(ListPtr list)
 */
 NodePtr removeRear(ListPtr list) {
 	NodePtr nodePtr;
-	pthread__mutex_lock(&(list->mutex));
+	pthread_mutex_lock(&(list->mutex));
 	while(getSize(list) == 0) {
 		//list is empty
 		pthread_cond_wait(&(list->bufferNotEmpty), &(list->mutex));
 	}
 	nodePtr = _removeRear(list);
-	pthread__mutex_unlock(&(list->mutex));
+	pthread_mutex_unlock(&(list->mutex));
 	pthread_cond_broadcast(&(list->bufferNotFull));
 	return nodePtr;
 }
@@ -248,13 +248,13 @@ NodePtr _removeRear(ListPtr list)
 */
 NodePtr removeNode(ListPtr list, NodePtr node) {
 	NodePtr nodePtr;
-	pthread__mutex_lock(&(list->mutex));
+	pthread_mutex_lock(&(list->mutex));
 	while(getSize(list) == 0) {
 		//list is empty
 		pthread_cond_wait(&(list->bufferNotEmpty), &(list->mutex));
 	}
 	nodePtr = _removeNode(list, node);
-	pthread__mutex_unlock(&(list->mutex));
+	pthread_mutex_unlock(&(list->mutex));
 	pthread_cond_broadcast(&(list->bufferNotFull));
 	return nodePtr;
 }
@@ -312,9 +312,9 @@ NodePtr search(ListPtr list, unsigned long int key)
 }
 
 void reverseList(ListPtr list) {
-	pthread__mutex_lock(&(list->mutex));
+	pthread_mutex_lock(&(list->mutex));
 	reverseList(list);
-	pthread__mutex_unlock(&(list->mutex));
+	pthread_mutex_unlock(&(list->mutex));
 }
 
 void _reverseList(ListPtr list)
