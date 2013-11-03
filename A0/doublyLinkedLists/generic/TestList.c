@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 		seed = atoi(argv[3]);
 	}
 
-	list = createList(getKey, toString, freeObject, compareObjects);
+	list = createList(getKey, toString, freeObject);//, compareObjects);
 	for (i=0; i<n; i++)
 	{
 		job = createObject(i, "args");

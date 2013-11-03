@@ -33,7 +33,7 @@ void freeObject(void *obj)
 	free(myobj);
 }
 
-int compareObjects(void *a, void *b) {
+/*int compareObjects(void *a, void *b) {
 	if (((ObjectPtr)a)->key == ((ObjectPtr)b)->key) return 1;
 	else return 0;
-}
+}*/

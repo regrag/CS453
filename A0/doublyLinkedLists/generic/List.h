@@ -21,7 +21,7 @@ struct list {
 	unsigned long int (*getKey)(void *);
 	char *  (*toString)(void *);
 	void (*freeObject)(void *);
-	int (*compareFunction)(void *, void *);
+	//int (*compareFunction)(void *, void *);
 };
 
 /* prototypes of public methods */
@@ -29,8 +29,8 @@ struct list {
 /* constructor */
 ListPtr createList(unsigned long int(*getKey)(void *), 
                    char * (*toString)(void *),
-				   void (*freeObject)(void *),
-				   int (*compareFunction)(void *, void *));
+				   void (*freeObject)(void *));//,
+				   //int (*compareFunction)(void *, void *));
 
 void freeList(ListPtr L); /* destructor */
 

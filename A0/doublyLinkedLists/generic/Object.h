@@ -23,7 +23,7 @@ ObjectPtr createObject (unsigned long int, char *);
 char *toString(void *);
 void freeObject(void *);
 unsigned long int getKey(void *);
-int compareObjects(void *, void *);
+//int compareObjects(void *, void *);
 
 
 #endif /* __OBJECT_H */

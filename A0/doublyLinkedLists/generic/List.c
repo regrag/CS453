@@ -18,8 +18,8 @@ static void print(NodePtr node, char * (*toString)(void *));
 
 ListPtr createList(unsigned long int (*getKey)(void *), 
                    char * (*toString)(void *),
-				   void (*freeObject)(void *),
-				   int (*compareFunction)(void *, void *))
+				   void (*freeObject)(void *))//,
+				   //int (*compareFunction)(void *, void *))
 {
 	ListPtr list;
 	list = (ListPtr) malloc(sizeof(List));
@@ -29,7 +29,7 @@ ListPtr createList(unsigned long int (*getKey)(void *),
 	list->getKey = getKey;
 	list->toString = toString;
 	list->freeObject = freeObject;
-	list->compareFunction = compareFunction;
+	//list->compareFunction = compareFunction;
 	return list;
 }
 
@@ -183,11 +183,14 @@ NodePtr removeNode(ListPtr list, NodePtr node)
 	if (list->size == 0) return NULL;
 	i = 1;
 	//Two corner cases
-	if(list->compareFunction(list->head, node) == 1) return removeFront(list); 
-	if(list->compareFunction(list->tail, node) == 1) return removeRear(list);
+	//if(list->compareFunction(list->head, node) == 1) return removeFront(list);
+	if(list->getKey(list->head) == list->getKey(node)) return removeFront(list);
+	//if(list->compareFunction(list->tail, node) == 1) return removeRear(list);
+	if(list->getKey(list->tail) == list->getKey(node)) return removeRear(list);
 	searchPtr = list->head->next;
 	while (i < list->size) {
-		if (list->compareFunction(searchPtr->obj, node->obj) == 1) {
+		//if (list->compareFunction(searchPtr->obj, node->obj) == 1) {
+		if(list->getKey(searchPtr->obj) == list->getKey(node->obj)) {
 			searchPtr->next->prev = searchPtr->prev;
 			searchPtr->prev->next = searchPtr->next;
 			list->size--;
