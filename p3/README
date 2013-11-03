@@ -1,0 +1,11 @@
+Author: Chad Weigle
+Date: 10/2/13
+
+Usage
+-----
+In root dir: make
+Then cd to src: ./test.sh
+
+Comments
+--------
+I was unable to get this project to compile, thus I could not test my code appropriately.
