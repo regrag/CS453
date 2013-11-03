@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 	fprintf(stderr, "%d producers %d consumers %d items %d pool size\n",
 			num_producers, num_consumers, maxcount*num_producers, poolsize);
 	pool = createList(getItemKey, toItemString, freeItem, poolsize);
-
+	printf("List Created.\n");
 	
 	ptids = (pthread_t *)  malloc(sizeof(pthread_t)*num_producers);
 	ctids = (pthread_t *)  malloc(sizeof(pthread_t)*num_consumers);

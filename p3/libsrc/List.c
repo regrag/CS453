@@ -36,6 +36,8 @@ ListPtr createList(unsigned long int (*getKey)(void *),
 	pthread_mutex_init(&(list->mutex), NULL);
     pthread_cond_broadcast(&(list->bufferNotEmpty));
     pthread_cond_broadcast(&(list->bufferNotFull));
+    printf("List inited.\n");
+    fflush(NULL);
 	return list;
 }
 
@@ -102,12 +104,14 @@ Boolean isEmpty(ListPtr list)
 */
 void addAtFront(ListPtr list, NodePtr node) {
 	pthread_mutex_lock(&(list->mutex));
+	printf("addAtFront, locked.\n");
 	while(getSize(list) == getMaxSize(list)) {
 		//list is full
 		pthread_cond_wait(&(list->bufferNotFull), &(list->mutex));
 	}
 	_addAtFront(list, node);
 	pthread_mutex_unlock(&(list->mutex));
+	printf("addAtFront, unlocked.\n");
 	pthread_cond_broadcast(&(list->bufferNotEmpty));
 }
 
@@ -136,12 +140,14 @@ void _addAtFront(ListPtr list, NodePtr node)
 */
 void addAtRear(ListPtr list, NodePtr node) {
 	pthread_mutex_lock(&(list->mutex));
+	printf("addAtRear, locked.\n");
 	while(getSize(list) == getMaxSize(list)) {
 		//list is full
 		pthread_cond_wait(&(list->bufferNotFull), &(list->mutex));
 	}
 	_addAtRear(list, node);
 	pthread_mutex_unlock(&(list->mutex));
+	printf("addAtRear, unlocked.\n");
 	pthread_cond_broadcast(&(list->bufferNotEmpty));
 }
 
@@ -170,12 +176,14 @@ void _addAtRear(ListPtr list, NodePtr node)
 NodePtr removeFront(ListPtr list) {
 	NodePtr nodePtr;
 	pthread_mutex_lock(&(list->mutex));
+	printf("removeFront, locked.\n");
 	while(getSize(list) == 0) {
 		//list is empty
 		pthread_cond_wait(&(list->bufferNotEmpty), &(list->mutex));
 	}
 	nodePtr = _removeFront(list);
 	pthread_mutex_unlock(&(list->mutex));
+	printf("removeFront, unlocked.\n");
 	pthread_cond_broadcast(&(list->bufferNotFull));
 	return nodePtr;
 }
@@ -209,12 +217,14 @@ NodePtr _removeFront(ListPtr list)
 NodePtr removeRear(ListPtr list) {
 	NodePtr nodePtr;
 	pthread_mutex_lock(&(list->mutex));
+	printf("removeRear, locked.\n");
 	while(getSize(list) == 0) {
 		//list is empty
 		pthread_cond_wait(&(list->bufferNotEmpty), &(list->mutex));
 	}
 	nodePtr = _removeRear(list);
 	pthread_mutex_unlock(&(list->mutex));
+	printf("removeRear, unlocked.\n");
 	pthread_cond_broadcast(&(list->bufferNotFull));
 	return nodePtr;
 }
@@ -268,8 +278,12 @@ NodePtr _removeNode(ListPtr list, NodePtr node)
 	if (list->size == 0) return NULL;
 	i = 1;
 	//Two corner cases
-	if(list->getKey(list->head) == list->getKey(node)) return removeFront(list);
-	if(list->getKey(list->tail) == list->getKey(node)) return removeRear(list);
+	if(list->getKey(list->head) == list->getKey(node)) {
+		return _removeFront(list);
+	} 
+	if(list->getKey(list->tail) == list->getKey(node)) {
+		return _removeRear(list);
+	} 
 	searchPtr = list->head->next;
 	while (i < list->size) {
 		if(list->getKey(searchPtr->obj) == list->getKey(node->obj)) {

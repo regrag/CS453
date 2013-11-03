@@ -6,6 +6,8 @@ LFLAGS=-L$(LIBS) -lmylib -lpthread
 CC=gcc
 CFLAGS=-Wall -g -I$(INCLUDE)
 
+all: pc
+	
 pc: pc.o  Item.o
 	$(CC) $(CFLAGS) -o $@ pc.o Item.o  $(LFLAGS)
 
