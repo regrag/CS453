@@ -22,6 +22,7 @@ ListPtr createList(unsigned long int (*getKey)(void *),
 	           void (*freeObject)(void *),
                    int maxSize)
 {
+	//fprintf(stderr, "Started List init.\n");
 	ListPtr list;
 	list = (ListPtr) malloc(sizeof(List));
 	list->size = 0;
@@ -33,11 +34,11 @@ ListPtr createList(unsigned long int (*getKey)(void *),
 	list->freeObject = freeObject;
 	pthread_cond_init(&(list->bufferNotEmpty), NULL);
 	pthread_cond_init(&(list->bufferNotFull), NULL);
+	list->finishUp = 0;
 	pthread_mutex_init(&(list->mutex), NULL);
     pthread_cond_broadcast(&(list->bufferNotEmpty));
     pthread_cond_broadcast(&(list->bufferNotFull));
-    printf("List inited.\n");
-    fflush(NULL);
+    //fprintf(stderr, "Completed List init.\n");
 	return list;
 }
 
@@ -78,9 +79,12 @@ int getMaxSize(ListPtr list) {
 
 void finishUp(ListPtr list) {
 	pthread_mutex_lock(&(list->mutex));
+	//fprintf(stderr, "finishUp locked.\n");
+	list->finishUp = 1;
 	pthread_cond_broadcast(&(list->bufferNotEmpty));
 	pthread_cond_broadcast(&(list->bufferNotFull));
 	pthread_mutex_unlock(&(list->mutex));
+	//fprintf(stderr, "finishUp unlocked.\n");
 }
 
 /*
@@ -104,14 +108,14 @@ Boolean isEmpty(ListPtr list)
 */
 void addAtFront(ListPtr list, NodePtr node) {
 	pthread_mutex_lock(&(list->mutex));
-	printf("addAtFront, locked.\n");
-	while(getSize(list) == getMaxSize(list)) {
+	//fprintf(stderr, "addAtFront, locked.\n");
+	while(getSize(list) == getMaxSize(list) && list->finishUp == 0) {
 		//list is full
 		pthread_cond_wait(&(list->bufferNotFull), &(list->mutex));
 	}
 	_addAtFront(list, node);
 	pthread_mutex_unlock(&(list->mutex));
-	printf("addAtFront, unlocked.\n");
+	//fprintf(stderr, "addAtFront, unlocked.\n");
 	pthread_cond_broadcast(&(list->bufferNotEmpty));
 }
 
@@ -140,14 +144,14 @@ void _addAtFront(ListPtr list, NodePtr node)
 */
 void addAtRear(ListPtr list, NodePtr node) {
 	pthread_mutex_lock(&(list->mutex));
-	printf("addAtRear, locked.\n");
-	while(getSize(list) == getMaxSize(list)) {
+	//fprintf(stderr, "addAtRear, locked.\n");
+	while(getSize(list) == getMaxSize(list) && list->finishUp == 0) {
 		//list is full
 		pthread_cond_wait(&(list->bufferNotFull), &(list->mutex));
 	}
 	_addAtRear(list, node);
 	pthread_mutex_unlock(&(list->mutex));
-	printf("addAtRear, unlocked.\n");
+	//fprintf(stderr, "addAtRear, unlocked.\n");
 	pthread_cond_broadcast(&(list->bufferNotEmpty));
 }
 
@@ -176,14 +180,15 @@ void _addAtRear(ListPtr list, NodePtr node)
 NodePtr removeFront(ListPtr list) {
 	NodePtr nodePtr;
 	pthread_mutex_lock(&(list->mutex));
-	printf("removeFront, locked.\n");
-	while(getSize(list) == 0) {
+	//fprintf(stderr, "removeFront, locked.\n");
+	while(getSize(list) == 0 && list->finishUp == 0) {
 		//list is empty
 		pthread_cond_wait(&(list->bufferNotEmpty), &(list->mutex));
 	}
+	//fprintf(stderr, "Size = %d\n", getSize(list));
 	nodePtr = _removeFront(list);
 	pthread_mutex_unlock(&(list->mutex));
-	printf("removeFront, unlocked.\n");
+	//fprintf(stderr, "removeFront, unlocked.\n");
 	pthread_cond_broadcast(&(list->bufferNotFull));
 	return nodePtr;
 }
@@ -217,14 +222,15 @@ NodePtr _removeFront(ListPtr list)
 NodePtr removeRear(ListPtr list) {
 	NodePtr nodePtr;
 	pthread_mutex_lock(&(list->mutex));
-	printf("removeRear, locked.\n");
-	while(getSize(list) == 0) {
+	//fprintf(stderr, "removeRear, locked.\n");
+	while(getSize(list) == 0 && list->finishUp == 0) {
 		//list is empty
 		pthread_cond_wait(&(list->bufferNotEmpty), &(list->mutex));
 	}
+	//fprintf(stderr, "Size = %d\n", getSize(list));
 	nodePtr = _removeRear(list);
 	pthread_mutex_unlock(&(list->mutex));
-	printf("removeRear, unlocked.\n");
+	//fprintf(stderr, "removeRear, unlocked.\n");
 	pthread_cond_broadcast(&(list->bufferNotFull));
 	return nodePtr;
 }
@@ -259,7 +265,7 @@ NodePtr _removeRear(ListPtr list)
 NodePtr removeNode(ListPtr list, NodePtr node) {
 	NodePtr nodePtr;
 	pthread_mutex_lock(&(list->mutex));
-	while(getSize(list) == 0) {
+	while(getSize(list) == 0 && list->finishUp == 0) {
 		//list is empty
 		pthread_cond_wait(&(list->bufferNotEmpty), &(list->mutex));
 	}

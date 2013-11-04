@@ -20,6 +20,7 @@ struct list {
 	int maxSize;
 	NodePtr head;
 	NodePtr tail;
+	int finishUp;
 	unsigned long int (*getKey)(void *);
 	char *  (*toString)(void *);
 	void (*freeObject)(void *);

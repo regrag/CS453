@@ -8,4 +8,6 @@ Then cd to src: ./test.sh
 
 Comments
 --------
-I was unable to get this project to compile, thus I could not test my code appropriately.
+I was unable to get this project to compile, thus I could not test my code appropriately. -- OLD --
+
+NEW COMMENTS: Holy sweet lord I got it to run. I had a deadlock problem for a couple of hours that drove me nuts! But I can now run the test script and it all runs well.
