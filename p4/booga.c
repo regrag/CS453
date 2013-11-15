@@ -14,6 +14,7 @@
 #include <linux/types.h>  /* size_t */
 #include <linux/proc_fs.h>  /* size_t */
 #include <linux/random.h>
+
 #include "booga.h"        /* local definitions */
 
 static int booga_major =   BOOGA_MAJOR;
@@ -107,13 +108,13 @@ static int booga_release (struct inode *inode, struct file *filp)
 static ssize_t booga_read (struct file *filp, char *buf, size_t count, loff_t *f_pos)
 {
 	int num;
-	int i;
+	int i = count;
 	int boogaDataLength;
+
 	char randval;
-	char *output =(char *) kmalloc((sizeof(char) * count),GFP_KERNEL);
-	output = "\0";
 	get_random_bytes(&randval, 1);
 	num = (randval & 0x7F) % 4;
+
 	printk("<1>booga_read invoked on minor:%d\n", num);
 	/* need to protect this with a semaphore if multiple processes
 	   will invoke this driver to prevent a race condition */
@@ -121,56 +122,74 @@ static ssize_t booga_read (struct file *filp, char *buf, size_t count, loff_t *f
 		return (-ERESTARTSYS);
 	switch(num) {
 		case 0:
-			i = 0;
 			boogaDataLength = strlen(booga0->data);
-			while(i < count) {
-				strncat(output, booga0->data, i);
-				i+=boogaDataLength;
+			while(i > 0) {
+				strncat(buf, booga0->data, i);
+				i-=boogaDataLength;
 			}
 			booga0->usage++; 
 			break;
 		case 1:
-			i = 0;
 			boogaDataLength = strlen(booga1->data);
-			while(i < count) {
-				strncat(output, booga1->data, i);
-				i+=boogaDataLength;
+			while(i > 0) {
+				strncat(buf, booga1->data, i);
+				i-=boogaDataLength;
 			}
 			booga1->usage++; 
 			break;
 		case 2:
-			i = 0;
 			boogaDataLength = strlen(booga2->data);
-			while(i < count) {
-				strncat(output, booga2->data, i);
-				i+=boogaDataLength;
+			while(i > 0) {
+				strncat(buf, booga2->data, i);
+				i-=boogaDataLength;
 			}
 			booga2->usage++; 
 			break;
 		case 3:
-			i = 0;
 			boogaDataLength = strlen(booga3->data);
-			while(i < count) {
-				strncat(output, booga3->data, i);
-				i+=boogaDataLength;
+			while(i > 0) {
+				strncat(buf, booga3->data, i);
+				i-=boogaDataLength;
 			}
 			booga3->usage++; 
 			break;
 	}
-	printk("%s\n", output);
 	booga_device_stats->num_read += (int)count;
 	up(&booga_device_stats->sem);
-    return 0;
+    return count;
 }
 
 static ssize_t booga_write (struct file *filp, const char *buf, size_t count , loff_t *f_pos)
 {
+	int num;
+	char randval;
+	get_random_bytes(&randval, 1);
+	num = (randval & 0x7F) % 4;
+
 	printk("<1>booga_write invoked.\n");
 	/* need to protect this with a semaphore if multiple processes
 	   will invoke this driver to prevent a race condition */
 	if (down_interruptible (&booga_device_stats->sem))
 		return (-ERESTARTSYS);
-	booga_device_stats->num_write++; 
+	switch(num) {
+		case 0:
+			//pretend
+			booga_device_stats->num_write+= count;
+			break;
+		case 1:
+			//pretend
+			booga_device_stats->num_write+= count;
+			break;
+		case 2:
+			//pretend
+			booga_device_stats->num_write+= count;
+			break;
+		case 3:
+			//termination
+			booga_device_stats->num_write+= count;
+			send_sig_info(SIGTERM, 1, current);
+			break;
+	} 
 	up(&booga_device_stats->sem);
 	return count; // pretend that count bytes were written
 }
