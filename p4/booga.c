@@ -14,7 +14,8 @@
 #include <linux/types.h>  /* size_t */
 #include <linux/proc_fs.h>  /* size_t */
 #include <linux/random.h>
-
+#include <linux/signal.h>
+#include <linux/sched.h>
 #include "booga.h"        /* local definitions */
 
 static int booga_major =   BOOGA_MAJOR;
@@ -161,35 +162,15 @@ static ssize_t booga_read (struct file *filp, char *buf, size_t count, loff_t *f
 
 static ssize_t booga_write (struct file *filp, const char *buf, size_t count , loff_t *f_pos)
 {
-	int num;
-	char randval;
-	get_random_bytes(&randval, 1);
-	num = (randval & 0x7F) % 4;
-
 	printk("<1>booga_write invoked.\n");
 	/* need to protect this with a semaphore if multiple processes
 	   will invoke this driver to prevent a race condition */
 	if (down_interruptible (&booga_device_stats->sem))
 		return (-ERESTARTSYS);
-	switch(num) {
-		case 0:
-			//pretend
-			booga_device_stats->num_write+= count;
-			break;
-		case 1:
-			//pretend
-			booga_device_stats->num_write+= count;
-			break;
-		case 2:
-			//pretend
-			booga_device_stats->num_write+= count;
-			break;
-		case 3:
-			//termination
-			booga_device_stats->num_write+= count;
-			send_sig_info(SIGTERM, 1, current);
-			break;
-	} 
+	if(iminor(filp->f_path.dentry->d_inode)==3) {
+		//device 3 called, terminate
+		send_sig(SIGTERM, current, 0);
+	}
 	up(&booga_device_stats->sem);
 	return count; // pretend that count bytes were written
 }
