@@ -1,0 +1,12 @@
+Author: Chad Weigle
+Project 4 - Booga Device Driver
+Date Due: 11/15/13
+
+usage:
+./test.sh
+
+Details:
+The test script will load the driver, print out the stats, run the test program 8 different times with different arguments, leaving the termination write for last, and then print out stats again.
+
+Comments:
+I do NOT like programming in the kernel. The documentation is cryptic and the community assumes a large amount of knowledge so it is very difficult searching forums for assistance. An example would be finding the methods to find the minor number and find the signal method. Other than than, the program went smoothly.
