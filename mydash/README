@@ -4,7 +4,20 @@ Programming Assignment 1
 
 Usage: ./run.sh
 
-mydash is a shell program written in C that uses a doubly linked list structure to keep track of jobs. The program runs most normal commands that a bash shell has like ls, cd, ps, etc. Also, there is a custom command, jobs, that will print all of the jobs that have been running in the background that have now been completed.
+Test: ./mydashTest.sh
 
-The design for this program was to write up the entire program in a single file and then break it up. Normally this design is poor to use, but I did not see the design section of the requirements until I was already partly through the project. When the shell was mostly completed, I then found sections that had common functionality and I broke those into functions and put them in a separate file.
+mydash is a shell program written in C that uses a doubly linked list structure to keep track of jobs. The program runs most normal commands that a bash shell has like ls, cd, ps, etc. Also, there is a custom command, jobs, that will print all of the jobs that have been running in the background or have completed.
 
+The design for this program was to write up the entire program in a single file and then break it up. Normally this design is poor to use, but I did not see the design section of the requirements until I was already partly through the project. When the shell was mostly completed, I then found sections that had common functionality and I broke those into functions and put them in a separate file. This proved to be quite difficult and made things hard to read. If only Software Engineering was earlier in the program!
+
+--UPDATED SECTION--
+
+Now that I have received a poor grade for mydash, I am fixing my many mistakes for the buddy project. I have noticed that the "put it all in one file" method has really kicked me in the rear because coming back to a project I haven't touched in a few months and having to fix bugs has been a hasle. To fix my mistakes, I had to do do the following:
+-Update this README
+-Create a test script
+-Include a version command
+-fix the jobs command
+-fix the job workflow so simple job control was completed
+-a couple of other little things
+
+In addition to my above comments, I would add one more. That is, I have grown greatly in my experience in both programming and Software Engineering in the last few months. I currently work at a Software Company and it has helped me develope critical thinking skills that I now find very useful and applicable to this school project.

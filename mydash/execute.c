@@ -25,7 +25,7 @@ int runJob(char **args, char *lineCopy, int jobCount, ListPtr list) {
 	}
 	
 	/* parent */
-	addAtRear(list, createNode(createJob(pid, lineCopy, jobCount)));
+	addAtRear(list, createNode(createJob(pid, lineCopy, jobCount, 0)));
 	jobCount++;
 	if ( (pid = waitpid(pid, &status, 0)) < 0)
 		err_sys("waitpid error");
@@ -52,8 +52,9 @@ int runJob(char **args, char *lineCopy, int jobCount, ListPtr list) {
 int runBackgroundJob(char **args, char *lineCopy, int i, int jobCount, ListPtr list) {
 	//run process in background
 	pid_t pid;
-	if(strcmp(args[i-1],"&") == 0) args[i-1] = NULL;
-	else args[i-1][(strlen(args[i-1])-1)] = NULL;
+	NodePtr node;
+	if(strcmp(args[i-1],"&") == 0) args[i-1] = 0;
+	else args[i-1][(strlen(args[i-1])-1)] = 0;
 
 	if ( (pid = fork()) < 0)
 		err_sys("fork error");	//did not fork correctly.
@@ -65,10 +66,11 @@ int runBackgroundJob(char **args, char *lineCopy, int i, int jobCount, ListPtr l
 	}
 
 	/* parent */
-	addAtRear(list, createNode(createJob(pid, lineCopy, jobCount)));
+	node = createNode(createJob(pid, lineCopy, jobCount, 1));
+	addAtRear(list, node);
 	jobCount++;
 	updateBackgroundJobs(list);
-	customPrintList(list->head, list->toString);
+	printBackgroundJob(node, list->toString);
 	return jobCount;
 }
 
@@ -82,12 +84,12 @@ void updateBackgroundJobs(ListPtr list) {
 	NodePtr node;
 	JobPtr job;
 	while((pid = waitpid(-1, &status, WNOHANG)) != 0) {
-				node = search(list,pid);
-				if(node == NULL || pid < 0) break;
-				job = (JobPtr)node->obj;
-				job->status = status;
-				job->reportted = 1;
-			}
+		node = search(list,pid);
+		if(node == NULL || pid < 0) break;
+		job = (JobPtr)node->obj;
+		job->status = status;
+		job->reportted = 1;
+	}
 }
 
 /**
@@ -96,7 +98,6 @@ void updateBackgroundJobs(ListPtr list) {
  * @param toString is a function pointer to the toString method of the data inside the nodes.
  */ 
 void customPrintList(NodePtr node, char * (*toString)(void *)) {
-	printf("\n");
 	char *output;
 	JobPtr job;
 	while (node) {
@@ -109,4 +110,37 @@ void customPrintList(NodePtr node, char * (*toString)(void *)) {
 		}
 		node = node->next;
 	}
+}
+
+/**
+ * printJobs prints the list to the specified format required by the assingment doc.
+ * @param node is a pointer to the node you wish to begin printing at. (generally head)
+ * @param toString is a function pointer to the toString method of the data inside the nodes.
+ */ 
+void printJobs(NodePtr node, char * (*toString)(void *)) {
+	char *output;
+	JobPtr job;
+	while (node) {
+		job = (JobPtr)node->obj;
+		if(job->jobsReportted == 1 && job->background == 1) {
+			output = (*toString)(node->obj);
+			printf(" %s\n",output);
+			free(output);
+			job->reportted = 0;
+			job->jobsReportted = 0;
+		}
+		node = node->next;
+	}
+}
+
+/**
+ * printBackgroundJob prints the list to the specified format required by the assingment doc.
+ * @param node is a pointer to the node you wish to begin printing at. (generally head)
+ * @param toString is a function pointer to the toString method of the data inside the nodes.
+ */ 
+void printBackgroundJob(NodePtr node, char * (*toString)(void *)) {
+	char *output;
+	output = (*toString)(node->obj);
+	printf(" %s\n",output);
+	free(output);
 }

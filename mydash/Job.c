@@ -2,13 +2,15 @@
 #include "ourhdr.h"
 
 
-JobPtr createJob(pid_t key, char *command, int jobNumber)
+JobPtr createJob(pid_t key, char *command, int jobNumber, int back)
 {
 	JobPtr newJob = (JobPtr) malloc (sizeof(Job));
 	newJob->key = key;
 	newJob->jobNumber = jobNumber;
-	newJob->status = NULL;
-	newJob->reportted = 1;
+	newJob->status = -1;
+	newJob->reportted = 0;
+	newJob->jobsReportted = 1;
+	newJob->background = back;
 	newJob->command = (char *) malloc(sizeof(char)*(strlen(command)+1));
 	strcpy(newJob->command, command); 
 	return newJob;

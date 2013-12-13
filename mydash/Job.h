@@ -19,10 +19,12 @@ struct job {
 	int jobNumber;
 	char *command;
 	unsigned int status;
-	int reportted;		//0, been reported; 1, needs reporting
+	int reportted;		//0, been reported; 1, needs reporting.
+	int jobsReportted;	//0, been reported by jobs command; 1, not.
+	int background;		//0, is not a background job; 1, is.
 };
 
-JobPtr createJob (pid_t, char *, int);
+JobPtr createJob (pid_t, char *, int, int);
 
 char *toString(void *);
 void freeJob(void *);

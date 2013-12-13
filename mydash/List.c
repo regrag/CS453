@@ -40,7 +40,6 @@ ListPtr createList(unsigned long int (*getKey)(void *),
 */
 void freeList(ListPtr list)
 {
-	if(list == NULL) return;
 	while(list->size > 0) {
 		freeNode(removeFront(list), list->freeObject);
 	}
@@ -53,7 +52,6 @@ void freeList(ListPtr list)
 */
 int getSize(ListPtr list)
 {
-	if(list == NULL) return NULL;
 	return list->size;
 }
 
@@ -211,7 +209,6 @@ NodePtr search(ListPtr list, unsigned long int key)
 	int i;
 	NodePtr searchPtr;
 	if (list == NULL) return NULL;
-	if (key == NULL ) return NULL;
 	if (list->size == 0) return NULL;
 	i = 0;
 	searchPtr = list->head;
