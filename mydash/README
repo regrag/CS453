@@ -4,7 +4,7 @@ Programming Assignment 1
 
 Usage: ./run.sh
 
-Test: ./mydashTest.sh
+Test: ./mydashTest.sh : while in the program
 
 mydash is a shell program written in C that uses a doubly linked list structure to keep track of jobs. The program runs most normal commands that a bash shell has like ls, cd, ps, etc. Also, there is a custom command, jobs, that will print all of the jobs that have been running in the background or have completed.
 
@@ -14,7 +14,7 @@ The design for this program was to write up the entire program in a single file 
 
 Now that I have received a poor grade for mydash, I am fixing my many mistakes for the buddy project. I have noticed that the "put it all in one file" method has really kicked me in the rear because coming back to a project I haven't touched in a few months and having to fix bugs has been a hasle. To fix my mistakes, I had to do do the following:
 -Update this README
--Create a test script
+-Create a test script. It is very basic because when running commands through a script, it will not print out the output from the program to the shell. Thus it is difficult to display useful results through a script.
 -Include a version command
 -fix the jobs command
 -fix the job workflow so simple job control was completed
