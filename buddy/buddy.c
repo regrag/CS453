@@ -3,7 +3,7 @@
 #include <string.h>
 #include <errno.h>
 #include "block.h"
-#incluce "buddy.h"
+#include "buddy.h"
 
 /* memory pool size is 2^35 or 32GB */
 #define MAX_MEM_SIZE 34359738368
@@ -13,55 +13,30 @@ static char initFlag = 0;	//has buddy_init been called? 0:no, 1:yes
 
 int main(int argc, char **argv)
 {
-	int i;
-	int value;
-	int *slot;
+	//test buddy_init
+	printf("Before buddy_init.\n");
+	buddy_init(DEFAULT_MEM_SIZE);
+	printf("After buddy_init.\n");
+	buddy_print();
 
-	/*void *pool = sbrk(1LL << 48);*/
-	void *pool = sbrk(1 << 22);
-	if (pool < 0 || errno == ENOMEM) {
-		perror("Could not allocate memory pool!");
-		exit(1);
-	}
-	/* Now pool is an array of MAX_MEM_SIZE  bytes */
+	//test a single malloc
+	buddy_malloc(32);
+	buddy_print();
 
-	printf("starting address for memory pool  = %p\n", pool);
-	for (i=0; i<1000000; i++) {
-		slot = pool+sizeof(int)*i;
-		*slot = i;
-	}
-
-	for (i=0; i<10; i++) {
-		memcpy(&value, pool+sizeof(int)*i, sizeof(int)); 
-		printf("int stored at slot[%d]=%d\n", i, value);
-		/*printf("int stored at slot[%d]=%d\n", i, *(int *)(pool+sizeof(int)*i));*/
-		/*int * array = (int *) pool; array[i]*/
-	}
-	/*int *x = (int *) malloc(sizeof(int));*/
-	void *pool2 = sbrk(1 << 22);
-	if (pool2 < 0 || errno == ENOMEM) {
-		perror("Could not allocate memory pool!");
-		exit(1);
-	}
-	printf("starting address for memory pool  = %p\n", pool2);
-	for (i=0; i<1000000; i++) {
-		slot = pool2+sizeof(int)*i;
-		*slot = i;
-	}
-	for (i=0; i<10; i++) {
-		memcpy(&value, pool2+sizeof(int)*i, sizeof(int)); 
-		printf("int stored at slot[%d]=%d\n", i, value);
-	}
 
 	exit(0);
 
 }
 
 void buddy_init(size_t initMemSize) {
-	if(initMemSize > MAX_MEM_SIZE) {
-		printf('Invalid memory size request. Greater than 32GB.');
+	if(initMemSize > MAX_MEM_SIZE || initMemSize <= 0) {
+		printf("Invalid memory size request. Greater than 32GB.");
 		exit(1);
 	}
+	/*int i = 0;
+	while(i < 35) {
+		avail[i] == NULL;	//null out all slots in avail
+	}*/
 	initFlag = 1;
 	BlockPtr head;
 	int size;
@@ -72,7 +47,7 @@ void buddy_init(size_t initMemSize) {
 	}
 	/* Now pool is an array of initMemSize  bytes */
 	size = find_power(initMemSize);
-	head = create_block(1, null, null, size, pool);
+	head = create_block(1, NULL, NULL, size, pool);
 	avail[size] = head;
 }
 
@@ -90,15 +65,16 @@ void *buddy_malloc(size_t size) {
 	}
 
 	int power = find_power((int)size);
-	if(avail[power] != null) {
+	if(avail[power] != NULL) {
 		mem = avail[power]->mem;
 		remove_block(avail[power]);
 	}
 	else {
 		count = power;
-		while(avail[count] == null && count != 35) {
+		while(avail[count] == NULL && count != 35) {
 			count++;
 		}
+		printf("Count after first while:%d\n", count);
 		if(count == 35) {
 			//out of memory!!!!!
 			printf("Out of memory!\n");
@@ -107,9 +83,11 @@ void *buddy_malloc(size_t size) {
 		}
 		//split the blocks
 		while(count != power) {
+			printf("Count:%d\n",count);
 			split_block(avail[count]);
 			count--;
 		}
+		printf("Count:%d , Power:%d\n", count, power);
 		mem = avail[power]->mem;
 		remove_block(avail[power]);
 	}
@@ -121,22 +99,28 @@ void *buddy_realloc(void * pointer, size_t size) {
 	if(initFlag != 1) {
 		buddy_init(DEFAULT_MEM_SIZE);
 	}
+	void *mem;
+
+	return mem;
 }
 
-void buddy_free(void *) {
+void buddy_free(void *pointer) {
 
 }
 
-static void *split_block(BlockPtr b) {
+static void split_block(BlockPtr b) {
 	BlockPtr newBlock;
+	void *newMem;
+	int size;
 
 	//remove from avail
 	remove_block(b);
 
 	//setup new mem and change b's size
-	newBlock->mem = b->mem + (1<<(b->header->kval / 2));
-	b->header->kval = b->header->kval / 2;
-	newBlock->header->kval = b->header->kval;
+	newMem = b->mem + (1<<(b->header.kval / 2));
+	b->header.kval = b->header.kval / 2;
+	size = b->header.kval;
+	newBlock = create_block(1, NULL, NULL, size, newMem);
 
 	//reinsert into avail
 	insert_block(b);
@@ -149,7 +133,7 @@ static void merge_blocks(BlockPtr b1, BlockPtr b2) {
 	remove_block(b2);
 
 	//setup b1 to be new combined block
-	b1->header->kval += b2->header->kval;
+	b1->header.kval += b2->header.kval;
 
 	//put b1 back in avail
 	insert_block(b1);
@@ -158,25 +142,25 @@ static void merge_blocks(BlockPtr b1, BlockPtr b2) {
 static void insert_block(BlockPtr block) {
 	BlockPtr temp;
 	//put block into avail
-	if(avail[block->header->kval] != null) {
-		temp = avail[block->header->kval];
-		while(temp->header->linkf != null) {
-			temp = temp->header->linkf;
+	if(avail[block->header.kval] != NULL) {
+		temp = avail[block->header.kval];
+		while(temp->header.linkf != NULL) {
+			temp = temp->header.linkf;
 		}
-		temp->header->linkf = block;
-		block->header->linkb = temp;
+		temp->header.linkf = block;
+		block->header.linkb = temp;
 	}
 	else {
-		avail[block->header->kval] = block;
+		avail[block->header.kval] = block;
 	}
 }
 
 static void remove_block(BlockPtr block) {
-	if(block->header->linkf != null) {
-		block->header->linkf->header->linkb = block->header->linkb;
+	if(block->header.linkf != NULL) {
+		block->header.linkf->header.linkb = block->header.linkb;
 	}
-	if(block->header->linkb != null) {
-		block->header->linkb->header->linkf = block->header->linkf;
+	if(block->header.linkb != NULL) {
+		block->header.linkb->header.linkf = block->header.linkf;
 	}
 }
 
@@ -197,4 +181,19 @@ static int find_power(int n) {
 		count += 1;
 	}
 	return count;
+}
+
+static void buddy_print() {
+	BlockPtr temp;
+	char* s;
+	int i = 0;
+	while(i < 35) {
+		temp = avail[i];
+		while(temp != NULL) {
+			s = toString(temp);
+			printf("%s\n", s);
+			temp = temp->header.linkf;
+		}
+		i++;
+	}
 }

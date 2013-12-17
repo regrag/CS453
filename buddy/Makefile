@@ -1,31 +1,17 @@
 
+INCLUDE=.
 CC=gcc
-CFLAGS=-I. -Wall -O3 
-#CFLAGS=-I. -Wall -g 
-LIBFLAGS=-I. -shared -fPIC
-LIBS=-L. -lbuddy
-LIBOBJS=buddy.o
+CFLAGS=-Wall -g -lreadline -lncurses -I$(INCLUDE)
+BUDOBJECTS=buddy.o block.o
+OBJECTS=mydash.o error.o Job.o List.o Node.o execute.o
 
-all: libbuddy.so libbuddy.a buddy-test malloc-test buddy-unit-test
+all: mydash
 
-buddy.o: buddy.c
-	$(CC) $(CFLAGS) -shared -fPIC -c -o $@ $?
+buddy: $(BUDOBJECTS)
+	$(CC) $(CFLAGS) -o $@ $(BUDOBJECTS) $(LFLAGS)
 
-libbuddy.so: $(LIBOBJS)
-	$(LD) $(LIBFLAGS) -o $@ $?
+mydash: $(OBJECTS) 
+	$(CC) $(CFLAGS) -o $@ $(OBJECTS)  $(LFLAGS)
 
-libbuddy.a: $(LIBOBJS)
-	$(AR)  rcv $@ $(LIBOBJS)
-	ranlib $@
-
-buddy-unit-test: buddy-unit-test.o
-	$(CC) $(CFLAGS) -o $@ $? $(LIBS)
-
-buddy-test: buddy-test.o
-	$(CC) $(CFLAGS) -o $@ $? $(LIBS)
-
-malloc-test: malloc-test.o 
-	$(CC) $(CFLAGS) -o $@ $?
-
-clean:	
-	/bin/rm -f *.o a.out buddy-test malloc-test libbuddy.* buddy-unit-test
+clean:
+	rm --force list *.o mydash buddy

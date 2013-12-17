@@ -3,13 +3,14 @@
 
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 struct block {
 	struct {
 		char tag;
-		struct header *linkf;
-		struct header *linkb;
+		struct block *linkf;
+		struct block *linkb;
 		unsigned int kval;
 	} header;
 	void *mem;
@@ -18,5 +19,7 @@ struct block {
 typedef struct block Block;
 typedef struct block * BlockPtr;
 
-BlockPtr create_block(char, BlockPtr, BlockPtr, unsigned int, void *sysmem);
+BlockPtr create_block(int, BlockPtr, BlockPtr, unsigned int, void *sysmem);
 char *toString(BlockPtr);
+
+#endif

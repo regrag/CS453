@@ -15,3 +15,6 @@ static void merge_blocks(BlockPtr, BlockPtr);
 static void insert_block(BlockPtr);
 static void remove_block(BlockPtr);
 static int find_power(int);
+static void buddy_print();
+
+#endif
