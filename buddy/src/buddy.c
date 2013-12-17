@@ -76,23 +76,48 @@ void buddy_init(size_t initMemSize) {
 	avail[size] = head;
 }
 
-void *buddy_calloc(size_t,size_t) {
-	if(initFlag != 1) {
-		buddy_init(DEFAULT_MEM_SIZE);
-	}
+void *buddy_calloc(size_t size, size_t num) {
+	void *mem = buddy_malloc(num * size);
+	memset(mem, 0, (size*num));
+	return mem;
 }
 
 void *buddy_malloc(size_t size) {
+	void *mem;
+	int count;
 	if(initFlag != 1) {
 		buddy_init(DEFAULT_MEM_SIZE);
 	}
-	int pow = find_power((int)size);
-	if(avail[pow] != null) {
 
+	int power = find_power((int)size);
+	if(avail[power] != null) {
+		mem = avail[power]->mem;
+		remove_block(avail[power]);
 	}
+	else {
+		count = power;
+		while(avail[count] == null && count != 35) {
+			count++;
+		}
+		if(count == 35) {
+			//out of memory!!!!!
+			printf("Out of memory!\n");
+			errno = ENOMEM;
+			exit(1);
+		}
+		//split the blocks
+		while(count != power) {
+			split_block(avail[count]);
+			count--;
+		}
+		mem = avail[power]->mem;
+		remove_block(avail[power]);
+	}
+
+	return mem;
 }
 
-void *buddy_realloc(void *,size_t) {
+void *buddy_realloc(void * pointer, size_t size) {
 	if(initFlag != 1) {
 		buddy_init(DEFAULT_MEM_SIZE);
 	}
@@ -103,38 +128,56 @@ void buddy_free(void *) {
 }
 
 static void *split_block(BlockPtr b) {
-	void *newBlock;
-	BlockPtr temp;
+	BlockPtr newBlock;
 
 	//remove from avail
-	if(b->header->linkf != null) {
-		b->header->linkf->header->linkb = b->header->linkb;
-	}
-	if(b->header->linkb != null) {
-		b->header->linkb->header->linkf = b->header->linkf;
-	}
+	remove_block(b);
 
 	//setup new mem and change b's size
-	newBlock = b->mem + (1<<(b->header->kval / 2));
+	newBlock->mem = b->mem + (1<<(b->header->kval / 2));
 	b->header->kval = b->header->kval / 2;
+	newBlock->header->kval = b->header->kval;
 
 	//reinsert into avail
-	if(avail[b->header->kval] != null) {
-		temp = avail[b->header->kval];
-		while(temp->header->linkf != null) {
-			temp = temp->header->linkf;
-		}
-		temp->header->linkf = b;
-		b->header->linkb = temp;
-	}
-	else {
-		avail[b->header->kval] = b;
-	}
-	return newBlock;
+	insert_block(b);
+	insert_block(newBlock);
 }
 
 static void merge_blocks(BlockPtr b1, BlockPtr b2) {
+	//remove both blocks from avail
+	remove_block(b1);
+	remove_block(b2);
 
+	//setup b1 to be new combined block
+	b1->header->kval += b2->header->kval;
+
+	//put b1 back in avail
+	insert_block(b1);
+}
+
+static void insert_block(BlockPtr block) {
+	BlockPtr temp;
+	//put block into avail
+	if(avail[block->header->kval] != null) {
+		temp = avail[block->header->kval];
+		while(temp->header->linkf != null) {
+			temp = temp->header->linkf;
+		}
+		temp->header->linkf = block;
+		block->header->linkb = temp;
+	}
+	else {
+		avail[block->header->kval] = block;
+	}
+}
+
+static void remove_block(BlockPtr block) {
+	if(block->header->linkf != null) {
+		block->header->linkf->header->linkb = block->header->linkb;
+	}
+	if(block->header->linkb != null) {
+		block->header->linkb->header->linkf = block->header->linkf;
+	}
 }
 
 static int find_power(int n) {

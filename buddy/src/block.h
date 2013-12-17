@@ -19,5 +19,4 @@ typedef struct block Block;
 typedef struct block * BlockPtr;
 
 BlockPtr create_block(char, BlockPtr, BlockPtr, unsigned int, void *sysmem);
-void free_block(BlockPtr);
 char *toString(BlockPtr);

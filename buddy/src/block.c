@@ -2,7 +2,7 @@
 
 HeaderPtr create_block(char newTag, BlockPtr next, 
 						BlockPtr prev, unsigned int size, void *sysmem) {
-	BlockPtr block;
+	static BlockPtr block;
 	block->header->tag = newTag;
 	block->header->linkf = next;
 	block->header->linkb = prev;
