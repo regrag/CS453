@@ -7,13 +7,10 @@
 #include <stdlib.h>
 
 struct block {
-	struct {
-		char tag;
-		struct block *linkf;
-		struct block *linkb;
-		unsigned int kval;
-	} header;
-	void *mem;
+	char tag;
+	struct block *linkf;
+	struct block *linkb;
+	unsigned int kval;
 };
 
 typedef struct block Block;
