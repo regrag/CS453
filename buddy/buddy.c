@@ -11,7 +11,14 @@
 
 HeaderPtr avail[35];
 static char initFlag = 0;	//has buddy_init been called? 0:no, 1:yes
+static size_t baseAddr;		//base address of the pool
 
+/*
+* Parameters: argc, argv - not used
+* Return: int - 0 if exitted normally, 1 if not
+* This function is what is compiled as the main of the buddy system. It is used for unit
+* level testing and nothing else.
+*/
 int main(int argc, char **argv)
 {
 	void *temp;
@@ -44,6 +51,12 @@ int main(int argc, char **argv)
 
 }
 
+/*
+* Parameters: size_t initMemSize - used for initial memory pool size
+* Returns: void
+* This function is used to setup the memory pool and pointers that will
+* be used in the buddy system.
+*/
 void buddy_init(size_t initMemSize) {
 	if(initMemSize > MAX_MEM_SIZE || initMemSize <= 0) {
 		printf("Invalid memory size request. Greater than 32GB.");
@@ -62,6 +75,7 @@ void buddy_init(size_t initMemSize) {
 	}
 
 	void *pool = sbrk(initMemSize);
+	baseAddr = pool;
 	if (pool < 0 || errno == ENOMEM) {
 		perror("Could not allocate memory pool!");
 		exit(1);
@@ -72,12 +86,22 @@ void buddy_init(size_t initMemSize) {
 	insert_front(block);
 }
 
+/*
+* Parameters: size_t size - size of data type, size_t num - number of data types to alloc
+* Returns: void* - pointer to alloc'ed memory
+* This function is used to alloc a number of data type of size.
+*/
 void *buddy_calloc(size_t size, size_t num) {
 	void *mem = buddy_malloc(num * size);
 	memset(mem, 0, (size*num));
 	return mem;
 }
 
+/*
+* Parameters: size_t size - size of memory requested
+* Returns: void* - pointer to alloc'ed memory
+* This function is used to alloc a memory block of size.
+*/
 void *buddy_malloc(size_t size) {
 	void *mem;
 	int count;
@@ -116,6 +140,12 @@ void *buddy_malloc(size_t size) {
 	return mem;
 }
 
+/*
+* Parameters: void* pointer - pointer from user that needs to be re-alloc'ed to,
+* size_t size - the desired size of the pointer returned
+* Returns: void* - pointer to alloc'ed memory
+* This function is used to realloc an existting pointer to be a different size.
+*/
 void *buddy_realloc(void * pointer, size_t size) {
 	if(initFlag != 1) {
 		buddy_init(DEFAULT_MEM_SIZE);
@@ -126,6 +156,11 @@ void *buddy_realloc(void * pointer, size_t size) {
 	return mem;
 }
 
+/*
+* Parameters: void* pointer - pointer to memory to be freed.
+* Returns: void
+* This function will "free" a pointer and put it back into the pool.
+*/
 void buddy_free(void *pointer) {
 	BlockPtr newBlock;
 	int power = find_power(sizeof(pointer));
@@ -139,9 +174,16 @@ void buddy_free(void *pointer) {
 	}
 }
 
+/*
+* Parameters: BlockPtr b - pointer to block to split
+* Returns: void
+* This function will split a block into two new blocks and insert them
+* both into the pool.
+*/
 static void split_block(BlockPtr b) {
 	printf("Entered split_block, splitting:%p\n", b);
 	BlockPtr newBlock;
+	BlockPtr temp = b;
 	int size;
 
 	//remove from avail
@@ -149,16 +191,25 @@ static void split_block(BlockPtr b) {
 
 	//setup new mem and change b's size
 	b->kval -= 1;
-	newBlock = create_block(1, NULL, NULL, b->kval, (b + (1<<b->kval)+1));
+	printf("b kval editted.\n");
+	newBlock = create_block(1, NULL, NULL, b->kval, (void*)(b + (1<<b->kval)));
 	printf("Block created inside split block.\n");
 	//reinsert into avail
 	insert_front(newBlock);
 	insert_front(b);
 }
 
+/*
+* Parameters: BlockPtr block - pointer to block to find the buddy of
+* Returns: BlockPtr - points to found buddy or null if not found
+* This function finds the buddy of a passed in block.
+*/
 static BlockPtr find_buddy(BlockPtr block) {
-	BlockPtr search = avail[block->kval]->head;
-	printf("***** %d",(1<<block->kval));
+	BlockPtr buddy = (BlockPtr)((((size_t)block-baseAddr)^(1<<block->kval)) + baseAddr);
+	return buddy;
+
+
+	/*BlockPtr search = avail[block->kval]->head;
 	void *possibleBuddy1 = block+(1<<block->kval);
 	void *possibleBuddy2 = block-(1<<block->kval);
 	//DEBUG printf("block:%p | looking:%p,%p\n",block, possibleBuddy1,possibleBuddy2);
@@ -169,9 +220,14 @@ static BlockPtr find_buddy(BlockPtr block) {
 			return possibleBuddy2;
 		search = search->linkf;
 	}
-	return NULL;
+	return NULL;*/
 }
 
+/*
+* Parameters: BlockPtr b1 - pointer to first block, BlockPtr b2 - pointer to second block
+* Returns: void
+* This function will merge the two passed in blocks into one and insert it into the pool
+*/
 static void merge_blocks(BlockPtr b1, BlockPtr b2) {
 	//remove both blocks from avail
 	remove_front(b1->kval);
@@ -187,6 +243,11 @@ static void merge_blocks(BlockPtr b1, BlockPtr b2) {
 	}
 }
 
+/*
+* Parameters: BlockPtr block - pointer to block to insert into front of a list
+* Returns: void
+* This function will insert the passed in block into the front of a list in avail.
+*/
 static void insert_front(BlockPtr block) {
 	//put block into avail
 	printf("Entered insert_front, inserting:%p\n", block);
@@ -202,6 +263,11 @@ static void insert_front(BlockPtr block) {
 	//DEBUG printf("Exitting insert_front, insertted:%p\n", block);
 }
 
+/*
+* Parameters: int power - used to find which list to pull from
+* Returns: void
+* This function will remove a block from the front of a list specified by power.
+*/
 static void remove_front(int power) {
 	BlockPtr temp;
 	printf("Entered remove_front, removing at:%d\n", power);
@@ -217,6 +283,11 @@ static void remove_front(int power) {
 	printf("Exitting remove_front, removing at:%d\n", power);
 }
 
+/*
+* Parameters: int n - number to find the nearest power of two of
+* Returns: int
+* This function will find the nearest power of two to the passed in value.
+*/
 static int find_power(int n) {
 	int count = 0;
 	//n is a power of 2
@@ -236,6 +307,11 @@ static int find_power(int n) {
 	return count;
 }
 
+/*
+* Parameters: void
+* Returns: void
+* This function will print out the buddy system list.
+*/
 static void buddy_print() {
 	BlockPtr temp;
 	char* s;
