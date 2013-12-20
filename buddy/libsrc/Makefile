@@ -1,17 +1,35 @@
 
+INSTALL=..
+LIB=$(INSTALL)/lib
 INCLUDE=.
 CC=gcc
-CFLAGS=-Wall -g -lreadline -lncurses -I$(INCLUDE)
-BUDOBJECTS=buddy.o block.o
-OBJECTS=mydash.o error.o Job.o List.o Node.o execute.o
+CFLAGS=-Wall -g -fPIC -shared -I$(INCLUDE)/
+LFLAGS=-L$(LIB) -lmylib
 
-all: mydash
+LIBOBJS=block.o buddy.o
 
-buddy: $(BUDOBJECTS)
-	$(CC) $(CFLAGS) -o $@ $(BUDOBJECTS) $(LFLAGS)
+all: libs 
 
-mydash: $(OBJECTS) 
-	$(CC) $(CFLAGS) -o $@ $(OBJECTS)  $(LFLAGS)
+libs: libmylib.so  libmylib.a
+
+libmylib.so: $(LIBOBJS)
+	$(LD) -shared -fPIC -o $@  $(LIBOBJS)
+
+libmylib.a: $(LIBOBJS)
+	$(AR)  rcv $@ $(LIBOBJS)
+	ranlib $@
+
+test:
+	gcc -g -Wall -o buddytest block.o buddy.o
+
+install: libs
+	install --mode=755  libmylib.so $(LIB)/libmylib.so
+	install --mode=755  libmylib.a $(LIB)/libmylib.a
+
+installclean:  clean
+	rm --force $(LIB)/libmylib.so
+	rm --force $(LIB)/libmylib.a
 
 clean:
-	rm --force list *.o mydash buddy
+	rm --force list *.o a.out buddytest core libmylib.a libmylib.so buddy.o block.o
+

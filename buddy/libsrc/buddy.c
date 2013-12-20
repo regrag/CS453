@@ -183,7 +183,6 @@ void buddy_free(void *pointer) {
 static void split_block(BlockPtr b) {
 	printf("Entered split_block, splitting:%p\n", b);
 	BlockPtr newBlock;
-	BlockPtr temp = b;
 	int size;
 
 	//remove from avail
@@ -191,8 +190,8 @@ static void split_block(BlockPtr b) {
 
 	//setup new mem and change b's size
 	b->kval -= 1;
-	printf("b kval editted.\n");
-	newBlock = create_block(1, NULL, NULL, b->kval, (void*)(b + (1<<b->kval)));
+	printf("b kval editted %d.\n", b->kval);
+	newBlock = create_block(1, NULL, NULL, b->kval, (void*)(((b-baseAddr) + (1<<b->kval))+baseAddr));
 	printf("Block created inside split block.\n");
 	//reinsert into avail
 	insert_front(newBlock);

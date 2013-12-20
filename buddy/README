@@ -1,6 +1,17 @@
 Author: Chad Weigle
-Date: 10/4/13
-Programming Assignment 1
+Date: 12/19/13
+Buddy System
+
+build: make
+
+Summary: This is the Buddy System. Inside the libsrc folder you will find the files used to create the libraries
+for buddy. I was unable to get buddy fully functional becuase of a seg fault in my block splitting
+method. Thus some tests are not linking to the library correctly. In order to test my buddy system, I wrote some unit tests in the buddy.c file's main method. Thus go into libsrc and type "make test". A testbuddy file will be created. Run this using "./testbuddy" and see the output of the tests. My code is mostly complete but also untested because I have an error so early on in my methods. I hope that because I gave a valiant effort I can still achieve a passing grade.
+
+Documentation: Doxygen comments have been placed in most of the files for any methods that needed them. Also, this README.
+
+--mydash README --
+Inside src
 
 Usage: ./run.sh
 
@@ -10,7 +21,7 @@ mydash is a shell program written in C that uses a doubly linked list structure 
 
 The design for this program was to write up the entire program in a single file and then break it up. Normally this design is poor to use, but I did not see the design section of the requirements until I was already partly through the project. When the shell was mostly completed, I then found sections that had common functionality and I broke those into functions and put them in a separate file. This proved to be quite difficult and made things hard to read. If only Software Engineering was earlier in the program!
 
---UPDATED SECTION--
+--UPDATED SECTION of mydash--
 
 Now that I have received a poor grade for mydash, I am fixing my many mistakes for the buddy project. I have noticed that the "put it all in one file" method has really kicked me in the rear because coming back to a project I haven't touched in a few months and having to fix bugs has been a hasle. To fix my mistakes, I had to do do the following:
 -Update this README
