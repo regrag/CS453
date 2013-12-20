@@ -1,0 +1,53 @@
+commit d18eedfcc52a4bf65749b0be83a76c9b8741c34b
+Author: Chad Weigle <chadweigle@gmail.com>
+Date:   Thu Dec 19 21:07:06 2013 -0700
+
+    Setup makefiles and more directories. Also editted README.
+
+commit 83824f7538ee605add4fda7f070788b8dd2698ab
+Author: Chad Weigle <chadweigle@gmail.com>
+Date:   Thu Dec 19 18:29:46 2013 -0700
+
+    Rearranged files to a structure defined by docs.
+
+commit 2470c946a9e70e0db969ea85ddc1bf1952d7aedf
+Author: Chad Weigle <chadweigle@gmail.com>
+Date:   Thu Dec 19 17:37:26 2013 -0700
+
+    Added doxygen comments and editted find buddy method to use algorithm defined in docs.
+
+commit bc596032591fedbe8b776f81cb638f0ed860dbfb
+Author: Chad Weigle <chadweigle@gmail.com>
+Date:   Thu Dec 19 15:34:40 2013 -0700
+
+    Buddy was allocing based off of kval not actual size. Fixed but now getting seg fault.
+
+commit 4fdd60dea3003925fa477d1e36c1a37dc3ca70f1
+Author: Chad Weigle <chadweigle@gmail.com>
+Date:   Wed Dec 18 00:21:17 2013 -0700
+
+    Removed some o files and updated buddy to put block meta data within block itself.
+
+commit 09b0339adfa3c53e427dc7fea7b131f212a95307
+Author: Chad Weigle <chadweigle@gmail.com>
+Date:   Tue Dec 17 00:15:14 2013 -0700
+
+    Moved stuff around. Debugged buddy init and working on debuggin malloc.
+
+commit 7d9f75345a9f7ccca1da37bf090d65ad9cb73a74
+Author: Chad Weigle <chadweigle@localhost.localdomain>
+Date:   Mon Dec 16 22:57:40 2013 -0700
+
+    just workin on buddy
+
+commit f49092a27e6ada4325667b1a1ed8e9b1dcd15559
+Author: Chad Weigle <chadweigle@localhost.localdomain>
+Date:   Sun Dec 15 19:55:28 2013 -0700
+
+    Implemented block and started on buddy.
+
+commit 9ad0790a147774029b2912e36130e728c683dd26
+Author: Chad Weigle <chadweigle@localhost.localdomain>
+Date:   Fri Dec 13 09:20:55 2013 -0700
+
+    mydash importted into buddy folder with some tests and examples.
